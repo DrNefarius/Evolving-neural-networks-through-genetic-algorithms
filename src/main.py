@@ -11,8 +11,15 @@ from operator import attrgetter
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import plotly.plotly as py
+import plotly.graph_objs as go
+
+import igraph
+from igraph import *
 import queue
 import sys
+
+
 # matplotlib.use('Agg')
 
 def evolve():
@@ -20,7 +27,8 @@ def evolve():
         This function defines all the important things for the EA to work properly
     :return:
     '''
-    print(str(parameters.POPULATION_SIZE) + ' Netze und ' + str(parameters.NUMBER_OF_GENERATIONS) + ' Generationen')
+    print(str(parameters.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
+        parameters.POPULATION_SIZE) + ' Netzen pro Generation.')
     pset = gp.PrimitiveSet("main", 0)
     # --- Define functions ---
     Ind = Individual()
@@ -275,13 +283,12 @@ start = time.time()
 results = evolve()
 end = time.time()
 
-
 print('Benötigte Zeit: '),
 print(end - start),
 print(' Sekunden.')
 print('Letzte Generation: ')
 if len(results) > 0:
     for i in results:
-        print(i.score/100),
+        print(i.score / 100),
         print('   ----    '),
         print(i)

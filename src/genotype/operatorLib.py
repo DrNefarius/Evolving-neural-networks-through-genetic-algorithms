@@ -33,14 +33,14 @@ class OperatorLib(object):
             self.addPoolS()
 
         # add actiavtion variations
-        # self.addSOFTMAX()
-        # self.addELU()
-        # self.addSOFTPLUS()
-        # self.addSOFTSIGN()
-        # self.addRELU()
-        # self.addTANH()
-        # self.addSIGMOID()
-        # self.addHSIGMOID()
+        self.addSOFTMAX()
+        self.addELU()
+        self.addSOFTPLUS()
+        self.addSOFTSIGN()
+        self.addRELU()
+        self.addTANH()
+        self.addSIGMOID()
+        self.addHSIGMOID()
 
     # ---- DEFINE OPERATORS ----
     # To define a new operator add function and call it in addOperators function, everything else is automatic

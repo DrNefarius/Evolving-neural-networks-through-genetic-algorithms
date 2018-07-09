@@ -189,7 +189,8 @@ class KerasConstructor(object):
             x = Dropout(0.5)(x)
         output_layer = Dense(outDime, activation=actFuncExit)(x)
         listOfLayers.append((round(outDime), actFuncExit))
-        plotNN.DrawNN(listOfLayers).draw()
+        # TODO: only draw best of each generation in a file
+        # plotNN.DrawNN(listOfLayers).draw()
         # --------------------------------------------------------------------------------------------------------------
         # ----------- MODEL EVALUATE-----------
         model = Model(inputs=input_layer, outputs=output_layer)

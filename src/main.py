@@ -69,6 +69,7 @@ def evolve():
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr_init)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("evaluate", evalGenotype)
+    toolbox.register("mate", gp.cxOnePoint)
     toolbox.register("select", tools.selTournament, tournsize=3)
     toolbox.register("expr_mut", gp.genFull, pset=pset, min_=1, max_=3)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
@@ -117,11 +118,6 @@ def evolve():
 
         selected = toolbox.select(population, len(population))
         offspring = [toolbox.clone(ind) for ind in selected]
-
-        # Select the next generation individuals
-        # offspring = toolbox.select(population, len(population))
-        # Clone the selected individuals
-        # offspring = map(toolbox.clone, offspring)
 
         # Apply mutation on the offspring
         for ofIndex in range(len(list(offspring))):

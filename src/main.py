@@ -11,11 +11,6 @@ from operator import attrgetter
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import plotly.plotly as py
-import plotly.graph_objs as go
-
-import igraph
-from igraph import *
 import queue
 import sys
 

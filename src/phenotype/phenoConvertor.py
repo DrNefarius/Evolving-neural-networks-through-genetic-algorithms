@@ -1,9 +1,7 @@
 from src.phenotype.pnode import Pnode
-from src.genotype.operatorLib import OperatorLib
 import queue
-from graphviz import Digraph
 from src import parameters
-import copy
+
 
 class PhenoConvertor(object):
 

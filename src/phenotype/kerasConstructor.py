@@ -47,6 +47,7 @@ class KerasConstructor(object):
         inpDime = parameters.INPUT_DIMENSION
         outDime = parameters.OUTPUT_DIMENSION
         num_epoch = parameters.LEARN_EPOCH_COUNT
+
         batch_size = parameters.BATCH_SIZE
         num_class = parameters.OUTPUT_CLASS_COUNT
         VERBOSE = parameters.VERBOSE

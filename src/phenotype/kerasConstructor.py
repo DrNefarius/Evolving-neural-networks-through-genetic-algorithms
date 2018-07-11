@@ -123,7 +123,7 @@ class KerasConstructor(object):
         output_layers = []
         # --- LAYERS
         index = 0
-        listOfLayers.append((round(inpDime/100), 'relu'))
+        # listOfLayers.append((round(inpDime/100), 'relu'))
         safety = 3*len(order)
         while len(order) > 0:
             if safety < 0:
@@ -153,7 +153,7 @@ class KerasConstructor(object):
                         # for layers with only one input create new layer and use the layer
                 if not isConvolution:
                     modelArr[order_index] = Dense(layer.neuron_count, activation=layer.act_func)(x)
-                    listOfLayers.append((round(layer.neuron_count/100), layer.act_func))
+                    # listOfLayers.append((round(layer.neuron_count/100), layer.act_func))
                 else:
                     im_dim = parameters.IMG_DIMENSION
                     filters = layer.filter_count
@@ -189,7 +189,7 @@ class KerasConstructor(object):
             x = Dense(parameters.MIN_NEURON_THRESHOLD, activation=actFuncExit)(x)
             x = Dropout(0.5)(x)
         output_layer = Dense(outDime, activation=actFuncExit)(x)
-        listOfLayers.append((round(outDime), actFuncExit))
+        # listOfLayers.append((round(outDime), actFuncExit))
         # TODO: only draw best of each generation in a file
         # plotNN.DrawNN(listOfLayers).draw()
         # --------------------------------------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ class KerasConstructor(object):
         testScore = score[1]*100
         score = model.evaluate(X_train, Y_train, verbose=VERBOSE)
         trainScore = score[1]*100
-        return trainScore,testScore
+        return trainScore, testScore, listOfLayers
 
     def printScore(self, test, train):
         outp = ' ---- TRAIN: ' + str(train*100) + ' ------ TEST: ' + str(test*100)

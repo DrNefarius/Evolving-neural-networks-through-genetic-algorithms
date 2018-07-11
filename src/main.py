@@ -53,14 +53,14 @@ def evolve():
         return scoreGen,
 
     # --- Define the mutation function --
-    def mutateWithLimit(ancestor):
-        mutant = toolbox.clone(ancestor)
-        toolbox.mutate(mutant)
-        while mutant.height > BLOAT_LIMIT:
-            mutant = toolbox.clone(ancestor)
-            toolbox.mutate(mutant)
-        del mutant.fitness.values
-        return mutant
+    # def mutateWithLimit(ancestor):
+    #     mutant = toolbox.clone(ancestor)
+    #     toolbox.mutate(mutant)
+    #     while mutant.height > BLOAT_LIMIT:
+    #         mutant = toolbox.clone(ancestor)
+    #         toolbox.mutate(mutant)
+    #     del mutant.fitness.values
+    #     return mutant
 
     # --- Define toolbox ---
     toolbox = base.Toolbox()
@@ -73,8 +73,8 @@ def evolve():
     toolbox.register("expr_mut", gp.genFull, pset=pset, min_=1, max_=3)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-    toolbox.decorate("mate", gp.staticLimit(operator.attrgetter('height'), 17))
-    toolbox.decorate("mutate", gp.staticLimit())
+    # toolbox.decorate("mate", gp.staticLimit('height', 17))
+    # toolbox.decorate("mutate", gp.staticLimit('height', 17))
 
     # --- Init params and call ---
     POPS = parameters.POPULATION_SIZE
@@ -161,22 +161,23 @@ def evolve():
                         toolbox.mutate(list(offspring)[inner])
                         del list(offspring)[inner].fitness.values
 
-            # Try selective mutations on BEST individuals
-            list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
-            needsSorting = False
-            print('TRY UPGRADE')
-            for index in range(parameters.ELITISM_TUNE_UP):
-                best = toolbox.clone(list(offspring)[0])
-                newBest = mutateWithLimit(best)
-                print('[  ' + str(best.score) + ' -- > ' + str(newBest.score) + '  ]')
-                if newBest.score > best.score:
-                    print('******')
-                    list(offspring)[POPS - 1 - ind] = newBest
-                    needsSorting = True
-                    break
-
-            if needsSorting:
-                list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
+            # # Try selective mutations on BEST individuals
+            # list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
+            # needsSorting = False
+            # print('TRY UPGRADE')
+            # for index in range(parameters.ELITISM_TUNE_UP):
+            #     best = toolbox.clone(list(offspring)[0])
+            #     toolbox.mutate(best)
+            #     newBest = mutateWithLimit(best)
+            #     print('[  ' + str(best.score) + ' -- > ' + str(newBest.score) + '  ]')
+            #     if newBest.score > best.score:
+            #         print('******')
+            #         list(offspring)[POPS - 1 - ind] = newBest
+            #         needsSorting = True
+            #         break
+            #
+            # if needsSorting:
+            #     list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
 
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]

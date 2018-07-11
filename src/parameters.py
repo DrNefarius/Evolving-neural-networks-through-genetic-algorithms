@@ -1,10 +1,10 @@
 # -------------------- MAIN - (switch for testing specific solutions) --------------------
-# USE_CONVOLUTION_NN = True
-USE_CONVOLUTION_NN = False
+USE_CONVOLUTION_NN = True
+# USE_CONVOLUTION_NN = False
 
 # -------------------- TESTING DATASET --------------------
-# DATASET = 'CIFAR'
-DATASET = 'MNIST'
+DATASET = 'CIFAR'
+# DATASET = 'MNIST'
 
 # -------------------- DEFAULT DATASET PARAMETERS --------------------
 TRAIN_SIZE = 5000
@@ -41,7 +41,7 @@ if DATASET == 'CIFAR':
 
 
 # -------------------- EVOLUTION PARAMETERS --------------------
-POPULATION_SIZE = 20
+POPULATION_SIZE = 10
 NUMBER_OF_GENERATIONS = 10
 ELITISM = round(POPULATION_SIZE/5)
 MUTATION_PROBABILTY = 0.1

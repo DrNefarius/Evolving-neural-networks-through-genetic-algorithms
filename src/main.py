@@ -6,7 +6,7 @@ from deap import creator
 from deap import tools
 from deap import gp
 from src.genotype.Individual import Individual
-from src.phenotype.kerasConstructor import KerasConstructor
+from src.phenotype.modelNN import ModelNN
 from operator import attrgetter
 import matplotlib
 import matplotlib.pyplot as plt
@@ -36,7 +36,8 @@ def evolve():
     # --- Define creator ---
     creator.create("FitnessMin", base.Fitness, weights=(1.0,))
     creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin, pset=pset)
-
+    global noOfNet
+    noOfNet = 0
     # --- Define Fitness function ---
     def evalGenotype(individual):
         print(individual)
@@ -44,7 +45,9 @@ def evolve():
         Ind.setGenotype(genotype)
         printGenotype(individual, genotype)
         result = Ind.getPhenotype(individual)
-        krs = KerasConstructor(result)
+        global noOfNet
+        krs = ModelNN(result, noOfNet)
+        noOfNet += 1
         print(krs.testAcc)
         individual.score = krs.testAcc
         individual.trainAcc = krs.trainAcc

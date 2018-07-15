@@ -5,7 +5,7 @@ from keras.layers import Input, Dense
 from keras.utils import np_utils
 from keras.utils import plot_model
 
-#use convolutional neural networks
+# use convolutional neural networks
 from keras.layers import Dropout, Activation, Flatten
 from keras.optimizers import Adam
 from keras.layers.normalization import BatchNormalization
@@ -14,26 +14,28 @@ from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D, GlobalAveragePooli
 from keras.layers.advanced_activations import LeakyReLU
 from keras.preprocessing.image import ImageDataGenerator
 
-
 from keras.datasets import mnist
 from keras.datasets import cifar10
 import sys
+
+from src.convnetdrawer.convnet_drawer import Model as drawModel, drawConv2D, drawMaxPooling2D, drawFlatten, drawDense
+from src.convnetdrawer.matplotlib_util import save_model_to_file
 
 from src import parameters, plotNN
 from sklearn.model_selection import StratifiedShuffleSplit
 from keras import backend as K
 
 
-class KerasConstructor(object):
+class ModelNN(object):
 
-    def __init__(self, root):
+    def __init__(self, root, noOfNet):
         sess = tf.Session()
         K.set_session(sess)
-        temp = self.createModel(root)
+        temp = self.createModel(root, noOfNet)
         self.testAcc = temp[1]
         self.trainAcc = temp[0]
 
-    def createModel(self, pheno):
+    def createModel(self, pheno, noOfNet):
         phenoArr = pheno[0]
         order = pheno[1]
 
@@ -61,20 +63,21 @@ class KerasConstructor(object):
         if parameters.DATASET == 'MNIST':
             (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
             if train_size < 60000:
-                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=parameters.OUTPUT_DIMENSION, train_size=train_size, random_state=seed)
+                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=parameters.OUTPUT_DIMENSION,
+                                             train_size=train_size, random_state=seed)
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
             if isConvolution:
-                X_train = X_train.reshape(train_size, inpDime[0],inpDime[0],inpDime[1])
-                X_test = X_test.reshape(10000, inpDime[0],inpDime[0],inpDime[1])
+                X_train = X_train.reshape(train_size, inpDime[0], inpDime[0], inpDime[1])
+                X_test = X_test.reshape(10000, inpDime[0], inpDime[0], inpDime[1])
                 X_train = X_train.astype('float32')
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
                 Y_train = np_utils.to_categorical(Y_train, num_class)
                 Y_test = np_utils.to_categorical(Y_test, num_class)
-            else :
+            else:
                 X_train = X_train.reshape(train_size, inpDime)
                 X_test = X_test.reshape(10000, inpDime)
                 X_train = X_train.astype('float32')
@@ -87,21 +90,22 @@ class KerasConstructor(object):
         if parameters.DATASET == 'CIFAR':
             (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
             if train_size < 50000:
-                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=parameters.OUTPUT_DIMENSION, train_size=train_size, random_state=seed)
+                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=parameters.OUTPUT_DIMENSION,
+                                             train_size=train_size, random_state=seed)
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
 
             if isConvolution:
-                X_train = X_train.reshape(train_size, inpDime[0],inpDime[0],inpDime[1])
-                X_test = X_test.reshape(10000, inpDime[0],inpDime[0],inpDime[1])
+                X_train = X_train.reshape(train_size, inpDime[0], inpDime[0], inpDime[1])
+                X_test = X_test.reshape(10000, inpDime[0], inpDime[0], inpDime[1])
                 X_train = X_train.astype('float32')
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
                 Y_train = np_utils.to_categorical(Y_train, num_class)
                 Y_test = np_utils.to_categorical(Y_test, num_class)
-            else :
+            else:
                 X_train = X_train.reshape(train_size, inpDime)
                 X_test = X_test.reshape(10000, inpDime)
                 X_train = X_train.astype('float32')
@@ -111,20 +115,19 @@ class KerasConstructor(object):
                 Y_train = np_utils.to_categorical(Y_train, num_class)
                 Y_test = np_utils.to_categorical(Y_test, num_class)
 
-
-
         # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
-        modelArr = [None]*len(phenoArr)
+        modelArr = [None] * len(phenoArr)
         listOfLayers = []
         if isConvolution:
-            modelArr[0] = (Input(shape=(inpDime[0],inpDime[0],inpDime[1])))
+            modelArr[0] = (Input(shape=(inpDime[0], inpDime[0], inpDime[1])))
+            model = drawModel(input_shape=(inpDime[0], inpDime[0], inpDime[1]))
         else:
             modelArr[0] = (Input(shape=(inpDime,)))
+            listOfLayers.append((round(inpDime / 100), 'relu'))
         output_layers = []
         # --- LAYERS
         index = 0
-        # listOfLayers.append((round(inpDime/100), 'relu'))
-        safety = 3*len(order)
+        safety = 3 * len(order)
         while len(order) > 0:
             if safety < 0:
                 print('ERROR: KERAS BUILD MODEL LOOPING')
@@ -132,7 +135,7 @@ class KerasConstructor(object):
             safety -= 1
             index = index % len(order)
             order_index = order[index]
-            layer = phenoArr[order_index] # iterate through pheno nodes
+            layer = phenoArr[order_index]  # iterate through pheno nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
             isReady = True
@@ -147,13 +150,13 @@ class KerasConstructor(object):
                     for inp in layer.inputs:
                         layersToConcatenate.append(modelArr[inp.index])
                     x = keras.layers.concatenate(layersToConcatenate)
-                else :
+                else:
                     for inp in layer.inputs:
                         x = (modelArr[inp.index])
                         # for layers with only one input create new layer and use the layer
                 if not isConvolution:
                     modelArr[order_index] = Dense(layer.neuron_count, activation=layer.act_func)(x)
-                    # listOfLayers.append((round(layer.neuron_count/100), layer.act_func))
+                    listOfLayers.append((round(layer.neuron_count / 100), layer.act_func))
                 else:
                     im_dim = parameters.IMG_DIMENSION
                     filters = layer.filter_count
@@ -161,20 +164,25 @@ class KerasConstructor(object):
                     pool_size = layer.pool_size if layer.pool_size < im_dim else im_dim
                     dropout = layer.dropout
                     x = modelArr[inp.index]
-                    x = Conv2D(filters = filters, kernel_size = kernel_size,
-                               strides=1, padding='same', activation = layer.act_func)(x)
+                    x = Conv2D(filters=filters, kernel_size=kernel_size,
+                               strides=1, padding='same', activation=layer.act_func)(x)
+                    model.add(drawConv2D(filters=filters, kernel_size=(kernel_size, kernel_size),
+                                     strides=(1, 1), padding='same'))
                     if layer.maxPooling:
-                        x = MaxPooling2D(pool_size = (pool_size, pool_size),
+                        x = MaxPooling2D(pool_size=(pool_size, pool_size),
                                          strides=1, padding='same')(x)
+                        model.add(drawMaxPooling2D(pool_size=(pool_size, pool_size),
+                                               strides=(1, 1), padding='same'))
                     if layer.dropout > 0:
                         Dropout(dropout)(x)
+                        # model.add(drawDropout(dropout))
                     modelArr[order_index] = x
 
-                if len(layer.outputs) == 0: # mark all ouput layers
+                if len(layer.outputs) == 0:  # mark all ouput layers
                     output_layers.append(modelArr[order_index])
                 order.remove(order_index)
                 index = 0
-            else :
+            else:
                 index += 1
                 # -----
         # ----------- CREATE NETWORK -----------
@@ -185,32 +193,41 @@ class KerasConstructor(object):
             x = output_layers[0]
         if isConvolution:
             x = Flatten()(x)
+            model.add(drawFlatten())
             BatchNormalization()(x)
+            # model.add(drawBatchNormalization())
             x = Dense(parameters.MIN_NEURON_THRESHOLD, activation=actFuncExit)(x)
+            model.add(drawDense(parameters.MIN_NEURON_THRESHOLD))
             x = Dropout(0.5)(x)
+            # model.add(Dropout(0.5))
         output_layer = Dense(outDime, activation=actFuncExit)(x)
-        # listOfLayers.append((round(outDime), actFuncExit))
-        # TODO: only draw best of each generation in a file
-        # plotNN.DrawNN(listOfLayers).draw()
+        if isConvolution:
+            model.add(drawDense(outDime))
+            save_model_to_file(model, "CNN" + str(noOfNet) + ".pdf")
+        else:
+            listOfLayers.append((round(outDime), actFuncExit))
+            # TODO: only draw best of each generation in a file
+            plotNN.DrawNN(listOfLayers).draw()
+
         # --------------------------------------------------------------------------------------------------------------
         # ----------- MODEL EVALUATE-----------
         model = Model(inputs=input_layer, outputs=output_layer)
         model.compile(loss=lossFunc, optimizer=optimizer, metrics=['accuracy'])
         model.fit(X_train, Y_train,
-                  batch_size = batch_size,
-                  epochs = num_epoch,
-                  verbose = VERBOSE,
-                  validation_data = (X_test, Y_test))
+                  batch_size=batch_size,
+                  epochs=num_epoch,
+                  verbose=VERBOSE,
+                  validation_data=(X_test, Y_test))
 
         # ----------- NETWORK OUTPUT ACCURACY-----------
         score = model.evaluate(X_test, Y_test, verbose=VERBOSE)
-        testScore = score[1]*100
+        testScore = score[1] * 100
         score = model.evaluate(X_train, Y_train, verbose=VERBOSE)
-        trainScore = score[1]*100
+        trainScore = score[1] * 100
         return trainScore, testScore, listOfLayers
 
     def printScore(self, test, train):
-        outp = ' ---- TRAIN: ' + str(train*100) + ' ------ TEST: ' + str(test*100)
+        outp = ' ---- TRAIN: ' + str(train * 100) + ' ------ TEST: ' + str(test * 100)
         file = open(parameters.OUTPUT_ACCURACY, 'a')
         file.write('\n' + outp)
         file.close()

@@ -299,17 +299,36 @@ def getOffset(count):
         str = str + '\t'
     return str
 
+def debugIndividual(individual):
+    pset = gp.PrimitiveSet('main', 0)
+    indi = Individual()
+    for key, value in indi.functions.items():
+        pset.addPrimitive(value[0], value[1], value[2])
+    pset.addTerminal('END')
+    genotype = gp.compile(individual, pset)
+    indi.setGenotype(genotype)
+    phenotype = indi.getPhenotype(individual)
+    network = ModelNN(phenotype)
+    return network.testAcc, network.trainAcc
 
-start = time.time()
-results = evolve()
-end = time.time()
 
-print('Benötigte Zeit: '),
-print(end - start),
-print(' Sekunden.')
-print('Letzte Generation: ')
-if len(results) > 0:
-    for i in results:
-        print(i.score / 100),
-        print('   ----    '),
-        print(i)
+# TODO: integrate preprocessor for #ifdef DEBUG python alternative
+# TODO: NOT WORKING RN
+if parameters.DEBUG:
+    print("DEBUG ACTIVE")
+    individual = "SEQ(PAR(PAR(PAR(PAR(PAR(TANH('END'), 'END'), DOUB(DOUB('END'))), 'END'), 'END'), DOUB('END')), TANH('END'))"
+    accs = debugIndividual(individual)
+    print(accs)
+else:
+    start = time.time()
+    results = evolve()
+    end = time.time()
+    print('Benötigte Zeit: '),
+    print(end - start),
+    print(' Sekunden.')
+    print('Letzte Generation: ')
+    if len(results) > 0:
+        for i in results:
+            print(i.score / 100),
+            print('   ----    '),
+            print(i)

@@ -207,7 +207,7 @@ class ModelNN(object):
         else:
             listOfLayers.append((round(outDime), actFuncExit))
             # TODO: only draw best of each generation in a file
-            plotNN.DrawNN(listOfLayers).draw()
+            # plotNN.DrawNN(listOfLayers).draw()
 
         # --------------------------------------------------------------------------------------------------------------
         # ----------- MODEL EVALUATE-----------

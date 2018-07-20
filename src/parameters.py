@@ -1,5 +1,5 @@
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # -------------------- MAIN - (switch for testing specific solutions) --------------------
 # USE_CONVOLUTION_NN = True

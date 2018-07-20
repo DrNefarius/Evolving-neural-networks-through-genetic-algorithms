@@ -3,6 +3,7 @@ from src.genotype.gnode import Gnode
 from src.phenotype.phenoConvertor import PhenoConvertor
 from src import parameters
 
+
 class Individual(object):
 
     def __init__(self):
@@ -38,7 +39,7 @@ class Individual(object):
         :return: an array [phenoLib, order]
         '''
         phc = PhenoConvertor(self.phenFunctions)
-        result = phc.resolvePheno(self.genotype, individual) #this operation executes the conversion
+        result = phc.resolvePheno(self.genotype, individual)  # this operation executes the conversion
         self.phenotype = result[0]
         return result
 
@@ -58,7 +59,6 @@ class Individual(object):
         neuron_count_val = (parameters.MAX_NEURON_THRESHOLD - neuron_count) * parameters.SCORE_CONST_NEURON
         return accuracy_val + layer_count_val + neuron_count_val
 
-
     def iteratePheno(self, node):
         '''
             This iterates through phenotype and counts neurons
@@ -71,4 +71,4 @@ class Individual(object):
         for o in node.outputs:
             n_count += o.neuron_count
             self.iteratePheno(o)
-        return n_count+self.iteratePheno(o)
+        return n_count + self.iteratePheno(o)

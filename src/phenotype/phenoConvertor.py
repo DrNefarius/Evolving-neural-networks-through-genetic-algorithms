@@ -7,7 +7,7 @@ class PhenoConvertor(object):
 
     def __init__(self, phenoLib):
         self.phenoLib = phenoLib
-        self.gbIndex  = 2
+        self.gbIndex = 2
         self.que = queue.Queue()
         self.nodeLib = []
 
@@ -19,36 +19,23 @@ class PhenoConvertor(object):
         inputN.addOutput(mother)
         mother.addInput(inputN)
         self.nodeLib.append(inputN)
-        self.iterateThrough(mother,root, 'basic')
+        self.iterateThrough(mother, root)
         order = self.getOrderBFS(inputN)
         self.printPhenotype(self.individual, order)
         library = self.convertNodeLib(self.nodeLib)
         return library, order
 
-
-    def iterateThrough(self, mother, root, level):
+    def iterateThrough(self, mother, root):
         backup = self.que
         self.que = queue.Queue()
         self.que.put([mother, root, 1])
         while not self.que.empty():
             item = self.que.get()
-            name = str(item[1].index)
             if item[0] not in self.nodeLib:
                 self.nodeLib.append(item[0])
-            if level == 'basic':
-                item[1].rec_count = item[2]
-                if item[1].isRECWeight():
-                    item[1].modRecCount()
-            if item[1].isREC() and (level == name or level == 'basic'):
-                item[1].rec_count -= 1
-                if item[1].rec_count <= 0:
-                    item[1].type = 'END'
-                else:
-                    self.iterateThrough(item[0], root, name)
             if not item[1].isFinal():
                 self.iteratePheno(item[0], item[1])
         self.que = backup
-
 
     def iteratePheno(self, node, genoNode):
         operator = self.phenoLib[genoNode.type]
@@ -71,7 +58,7 @@ class PhenoConvertor(object):
         for index in order:
             outp += self.getWays(self.nodeLib[index])
         file = open(parameters.OUTPUT_PHENOTYPE_TREE, 'a')
-        file.write('\n\n' + str(ind)+'\n')
+        file.write('\n\n' + str(ind) + '\n')
         file.write('digraph{\n')
         file.write(outp)
         file.write('}')
@@ -85,14 +72,10 @@ class PhenoConvertor(object):
 
     def getWays(self, node):
         outp = ''
-        # for i in node.inputs:
-        #     inName = str(i.index) + '_' + str(i.neuron_count)
-        #     outName = str(node.index) + '_' + str(node.neuron_count)
-        #     outp += '\"' + outName + '\"->\"' + inName + '\"' +'\n'
         for o in node.outputs:
             inName = str(node.index) + '_' + str(node.neuron_count)
             outName = str(o.index) + '_' + str(o.neuron_count)
-            outp += '\"' + inName + '\"->\"' + outName + '\"' +'\n'
+            outp += '\"' + inName + '\"->\"' + outName + '\"' + '\n'
         return outp
 
     def getOrderBFS(self, node):

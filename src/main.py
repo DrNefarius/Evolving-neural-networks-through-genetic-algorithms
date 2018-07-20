@@ -38,6 +38,7 @@ def evolve():
     creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin, pset=pset)
     global noOfNet
     noOfNet = 0
+
     # --- Define Fitness function ---
     def evalGenotype(individual):
         print(individual)
@@ -198,8 +199,6 @@ def evolve():
                     root = gp.compile(indi, pset)
                     printGenotype(indi, root)
 
-
-
             # The population is entirely replaced by the offspring
             population[:] = offspring
 
@@ -299,24 +298,27 @@ def getOffset(count):
         str = str + '\t'
     return str
 
+
 def debugIndividual(individual):
     pset = gp.PrimitiveSet('main', 0)
     indi = Individual()
     for key, value in indi.functions.items():
         pset.addPrimitive(value[0], value[1], value[2])
     pset.addTerminal('END')
-    genotype = gp.compile(individual, pset)
+    tree = gp.PrimitiveTree.from_string(individual, pset)
+    genotype = gp.compile(tree, pset)
     indi.setGenotype(genotype)
     phenotype = indi.getPhenotype(individual)
-    network = ModelNN(phenotype)
+    network = ModelNN(phenotype, 9999)
     return network.testAcc, network.trainAcc
 
 
 # TODO: integrate preprocessor for #ifdef DEBUG python alternative
-# TODO: NOT WORKING RN
 if parameters.DEBUG:
     print("DEBUG ACTIVE")
-    individual = "SEQ(PAR(PAR(PAR(PAR(PAR(TANH('END'), 'END'), DOUB(DOUB('END'))), 'END'), 'END'), DOUB('END')), TANH('END'))"
+    individual = "PAR(DOUB(SEQ(DOUB(RELU(PAR(PAR(PAR(HALF(SOFTSIGN(ELU(DOUB(RELU(RELU('END')))))), 'END'), 'END'), RELU('END')))), 'END')), RELU(RELU('END')))"
+    # SEQ(PAR(PAR(PAR(PAR(PAR(TANH('END'), 'END'), DOUB(DOUB('END'))), 'END'), 'END'), DOUB('END')), TANH('END'))
+    # PAR(DOUB(SEQ(DOUB(RELU(PAR(PAR(PAR(HALF(SOFTSIGN(ELU(DOUB(RELU(RELU('END')))))), 'END'), 'END'), RELU('END')))), 'END')), RELU(RELU('END')))
     accs = debugIndividual(individual)
     print(accs)
 else:

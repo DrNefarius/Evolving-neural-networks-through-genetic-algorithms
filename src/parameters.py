@@ -1,5 +1,5 @@
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # -------------------- MAIN - (switch for testing specific solutions) --------------------
 # USE_CONVOLUTION_NN = True
@@ -44,12 +44,12 @@ if DATASET == 'CIFAR':
 
 
 # -------------------- EVOLUTION PARAMETERS --------------------
-POPULATION_SIZE = 20
-NUMBER_OF_GENERATIONS = 20
+POPULATION_SIZE = 15
+NUMBER_OF_GENERATIONS = 15
 ELITISM = round(POPULATION_SIZE/5)
 MUTATION_PROBABILTY = 0.1
 CROSSOVER_PROBABILITY = 0.5
-BLOAT_LIMIT = 5
+BLOAT_LIMIT = 17
 ELITISM_TUNE_UP = 0
 
 # -------------------- FITNESS FUNCTION PARAMETERS --------------------

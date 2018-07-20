@@ -1,3 +1,4 @@
+import operator
 import time
 import random
 from src import parameters
@@ -24,6 +25,11 @@ def evolve():
     '''
     print(str(parameters.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
         parameters.POPULATION_SIZE) + ' Netzen pro Generation.')
+
+    # global counter for network printing
+    global noOfNet
+    noOfNet = 0
+
     pset = gp.PrimitiveSet("main", 0)
     # --- Define functions ---
     Ind = Individual()
@@ -36,8 +42,11 @@ def evolve():
     # --- Define creator ---
     creator.create("FitnessMin", base.Fitness, weights=(1.0,))
     creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin, pset=pset)
-    global noOfNet
-    noOfNet = 0
+    # --- Define toolbox ---
+    toolbox = base.Toolbox()
+    toolbox.register("expr_init", gp.genFull, pset=pset, min_=1, max_=1)
+    toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr_init)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
     # --- Define Fitness function ---
     def evalGenotype(individual):
@@ -53,29 +62,16 @@ def evolve():
         individual.score = krs.testAcc
         individual.trainAcc = krs.trainAcc
         scoreGen = krs.testAcc
-        # scoreGen = Ind.evaluatePhenotype(individual.height, krs.testAcc)
         return scoreGen,
 
-    # --- Define the mutation function --
-    # def mutateWithLimit(ancestor):
-    #     mutant = toolbox.clone(ancestor)
-    #     toolbox.mutate(mutant)
-    #     while mutant.height > BLOAT_LIMIT:
-    #         mutant = toolbox.clone(ancestor)
-    #         toolbox.mutate(mutant)
-    #     del mutant.fitness.values
-    #     return mutant
-
-    # --- Define toolbox ---
-    toolbox = base.Toolbox()
-    toolbox.register("expr_init", gp.genFull, pset=pset, min_=1, max_=1)
-    toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr_init)
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
     toolbox.register("evaluate", evalGenotype)
     toolbox.register("mate", gp.cxOnePoint)
     toolbox.register("select", tools.selTournament, tournsize=3)
     toolbox.register("expr_mut", gp.genFull, pset=pset, min_=1, max_=3)
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=parameters.BLOAT_LIMIT))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=parameters.BLOAT_LIMIT))
 
     # toolbox.decorate("mate", gp.staticLimit('height', 17))
     # toolbox.decorate("mutate", gp.staticLimit('height', 17))
@@ -91,26 +87,10 @@ def evolve():
     random.seed(69)
     population = toolbox.population(n=POPS)
 
-    # Data for graph
-    wrstArr = []  # WRST RED
-    avgArr = []  # AVG BLUE
-    bestArr = []  # BEST GREEN
-    trainAcc = []
-    testAcc = []
-
-    # Evaluate the entire generation
-    fitnesses = map(toolbox.evaluate, population)
-    for ind, fit in zip(population, fitnesses):
-        ind.fitness.values = fit
-    population.sort(key=attrgetter('fitness'), reverse=True)
-
-    compIndex = 1
-    for g in range(NGEN):
+    def logPop(population, compIndex):
         population.sort(key=attrgetter('fitness'), reverse=True)
-        # ------------------------------  LOG THE POPULATION ------------------------------------------------------
         lastIndex = len(population) - 1
         comp = compIndex / (NGEN * 1.0)
-        compIndex += 1
         compl = 'COMPLETE [ ' + str(round(comp * 100, 2)) + ' ] \n'
         gene = 'BEST SOLUTION: [ ' + str(population[0].score) + ' %] '
         print(sys.stderr, compl + gene)
@@ -122,9 +102,24 @@ def evolve():
         for ind in population:
             totalScore += ind.score
         avgArr.append(totalScore / POPS)
-        if g != NGEN:
-            # ----------------------------------------------------------------------------------------------------------
 
+    # Data for graph
+    wrstArr = []  # WRST RED
+    avgArr = []  # AVG BLUE
+    bestArr = []  # BEST GREEN
+    trainAcc = []
+    testAcc = []
+
+    # Evaluate the entire generation
+    fitnesses = map(toolbox.evaluate, population)
+    for ind, fit in zip(population, fitnesses):
+        ind.fitness.values = fit
+
+    compIndex = 1
+    for gen in range(NGEN):
+        logPop(population, compIndex)
+        compIndex += 1
+        if gen != NGEN:
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
 
@@ -140,64 +135,21 @@ def evolve():
                 if random.random() < MUTPB:
                     toolbox.mutate(mutant)
                     del mutant.fitness.values
-            # for ofIndex in range(len(list(offspring))):
-            #     if len(list(offspring)) > 0:
-            #         mutant = list(offspring)[ofIndex]
-            #         if random.random() < MUTPB:
-            #             ancestor = toolbox.clone(mutant)
-            #             offspring[ofIndex] = mutateWithLimit(mutant)
-            #             printMutationChange(ancestor, offspring[ofIndex])
-
-            # Use elitism for
-            list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
-            for ind in range(ELITISM):
-                potential = population[ind]
-                if list(offspring)[POPS - 1 - ind].score < potential.score:
-                    list(offspring)[POPS - 1 - ind] = potential
 
             # Remove duplicates in the offspring
-            list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
-            for outer in range(len(list(offspring))):
-                for inner in range(outer + 1, len(list(offspring))):
-                    if str(list(offspring)[outer]) == str(list(offspring)[inner]):
+            for outer in range(len(offspring)):
+                for inner in range(outer + 1, len(offspring)):
+                    if str(offspring[outer]) == str(offspring[inner]):
                         print(' *')
                         # list(offspring)[inner] = mutateWithLimit(list(offspring)[inner])
-                        toolbox.mutate(list(offspring)[inner])
-                        del list(offspring)[inner].fitness.values
-
-            # # Try selective mutations on BEST individuals
-            # list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
-            # needsSorting = False
-            # print('TRY UPGRADE')
-            # for index in range(parameters.ELITISM_TUNE_UP):
-            #     best = toolbox.clone(list(offspring)[0])
-            #     toolbox.mutate(best)
-            #     newBest = mutateWithLimit(best)
-            #     print('[  ' + str(best.score) + ' -- > ' + str(newBest.score) + '  ]')
-            #     if newBest.score > best.score:
-            #         print('******')
-            #         list(offspring)[POPS - 1 - ind] = newBest
-            #         needsSorting = True
-            #         break
-            #
-            # if needsSorting:
-            #     list(offspring).sort(key=attrgetter('fitness'), reverse=True)  # <------------  SORT !
+                        toolbox.mutate(offspring[inner])
+                        del offspring[inner].fitness.values
 
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
-
-            # ----------- PRINT THE WHOLE POPULATION
-            printPopulationGenotypes = True
-            if printPopulationGenotypes:
-                file = open(parameters.OUTPUT_GENOTYPE_TREE, 'a')
-                file.write('\n\n --------- NEXT GENERATION : [ ' + str(g) + ' ] ----------- \n\n')
-                file.close()
-                for indi in list(offspring):
-                    root = gp.compile(indi, pset)
-                    printGenotype(indi, root)
 
             # The population is entirely replaced by the offspring
             population[:] = offspring

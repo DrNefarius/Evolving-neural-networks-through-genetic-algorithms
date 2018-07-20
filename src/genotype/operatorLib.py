@@ -31,16 +31,17 @@ class OperatorLib(object):
             self.addDoubF()
             self.addKerS()
             self.addPoolS()
+        else:
+            # add actiavtion variations
+            self.addSOFTMAX()
+            self.addELU()
+            self.addSOFTPLUS()
+            self.addSOFTSIGN()
+            self.addRELU()
+            self.addTANH()
+            self.addSIGMOID()
+            self.addHSIGMOID()
 
-        # add actiavtion variations
-        self.addSOFTMAX()
-        self.addELU()
-        self.addSOFTPLUS()
-        self.addSOFTSIGN()
-        self.addRELU()
-        self.addTANH()
-        self.addSIGMOID()
-        self.addHSIGMOID()
 
     # ---- DEFINE OPERATORS ----
     # To define a new operator add function and call it in addOperators function, everything else is automatic

@@ -1,4 +1,4 @@
-from src.phenotype.pnode import Pnode
+from src.evolution.pheno import pheno
 import queue
 from src import parameters
 
@@ -13,9 +13,9 @@ class PhenoConvertor(object):
 
     def resolvePheno(self, root, individual):
         self.individual = individual
-        inputN = Pnode(0)
+        inputN = pheno(0)
         self.input = inputN
-        mother = Pnode(1)
+        mother = pheno(1)
         inputN.addOutput(mother)
         mother.addInput(inputN)
         self.nodeLib.append(inputN)
@@ -33,7 +33,7 @@ class PhenoConvertor(object):
             item = self.que.get()
             if item[0] not in self.nodeLib:
                 self.nodeLib.append(item[0])
-            if not item[1].isFinal():
+            if not item[1].isTerminal():
                 self.iteratePheno(item[0], item[1])
         self.que = backup
 
@@ -73,8 +73,8 @@ class PhenoConvertor(object):
     def getWays(self, node):
         outp = ''
         for o in node.outputs:
-            inName = str(node.index) + '_' + str(node.neuron_count)
-            outName = str(o.index) + '_' + str(o.neuron_count)
+            inName = str(node.index) + '_' + str(node.neuron_count) + '_' + node.activation_function
+            outName = str(o.index) + '_' + str(o.neuron_count) + '_' + node.activation_function
             outp += '\"' + inName + '\"->\"' + outName + '\"' + '\n'
         return outp
 

@@ -159,20 +159,20 @@ class ModelNN(object):
                     listOfLayers.append((round(layer.neuron_count / 100), layer.act_func))
                 else:
                     im_dim = parameters.IMG_DIMENSION
-                    filters = layer.filter_count
                     kernel_size = layer.kernel_size if layer.kernel_size < im_dim else im_dim
                     pool_size = layer.pool_size if layer.pool_size < im_dim else im_dim
                     dropout = layer.dropout
                     x = modelArr[inp.index]
-                    x = Conv2D(filters=filters, kernel_size=kernel_size,
+                    x = Conv2D(filters=layer.filter_count, kernel_size=kernel_size,
                                strides=1, padding='same', activation=layer.act_func)(x)
-                    model.add(drawConv2D(filters=filters, kernel_size=(kernel_size, kernel_size),
+                    model.add(drawConv2D(filters=layer.filter_count, kernel_size=(kernel_size, kernel_size),
                                      strides=(1, 1), padding='same'))
                     if layer.maxPooling:
                         x = MaxPooling2D(pool_size=(pool_size, pool_size),
                                          strides=1, padding='same')(x)
                         model.add(drawMaxPooling2D(pool_size=(pool_size, pool_size),
                                                strides=(1, 1), padding='same'))
+
                     if layer.dropout > 0:
                         Dropout(dropout)(x)
                         # model.add(drawDropout(dropout))

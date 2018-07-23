@@ -1,8 +1,9 @@
 from src import parameters
 
-class Pnode(object):
 
-    def __init__(self, index, neuroncount = parameters.NEURON_COUNT):
+class pheno(object):
+
+    def __init__(self, index, neuroncount=parameters.NEURON_COUNT):
         self.inputs = []
         self.outputs = []
         self.index = index
@@ -14,16 +15,15 @@ class Pnode(object):
         self.layer_type = parameters.ACTIVATION_FUNCTION
         if neuroncount < parameters.MIN_NEURON_THRESHOLD:
             self.neuron_count = self.minThreshold
-        else :
+        else:
             self.neuron_count = neuroncount
 
-        if(parameters.USE_CONVOLUTION_NN):
+        if (parameters.USE_CONVOLUTION_NN):
             self.dropout = parameters.DROUPOUT
             self.maxPooling = True
             self.filter_count = parameters.FILTER_COUNT
             self.kernel_size = parameters.KERNEL_SIZE
             self.pool_size = parameters.POOL_SIZE
-
 
     def __eq__(self, other):
         return self.index == other.index
@@ -36,7 +36,7 @@ class Pnode(object):
         if node not in self.outputs:
             self.outputs.append(node)
 
-    def copyInputs(self,node):
+    def copyInputs(self, node):
         for i in node.inputs:
             self.addInput(i)
             i.addOutput(self)
@@ -67,7 +67,6 @@ class Pnode(object):
             self.addOutput(o)
             o.addInput(self)
 
-    #  ------------------
     def setType(self, type):
         self.type = type
 

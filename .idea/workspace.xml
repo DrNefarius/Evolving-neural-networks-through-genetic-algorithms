@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48caaa3b-9541-4378-9381-3864b1106e44" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelNN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,8 +50,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="175" column="29" lean-forward="true" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
+            <state relative-caret-position="2567">
+              <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -59,20 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
               <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geno.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/evolution/geno.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -98,11 +89,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modelNN.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/parameters.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="622">
+              <caret line="81" column="10" selection-start-line="81" selection-end-line="81" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modelNN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/modelNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-425">
-              <caret line="174" selection-start-line="174" selection-end-line="174" />
+            <state relative-caret-position="241">
+              <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="120" selection-end-column="36" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -121,14 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>printTree</find>
-      <find>getWays</find>
-      <find>pheno</find>
-      <find>cos</find>
-      <find>layer</find>
-      <find>GENERATION</find>
-      <find>mutate</find>
-      <find>keras</find>
       <find>individual</find>
       <find>evalGenotype</find>
       <find>Drop</find>
@@ -151,6 +143,14 @@
       <find>ternary</find>
       <find>printMutationChange</find>
       <find>printGenotype</find>
+      <find>mpatches</find>
+      <find>print_genotype</find>
+      <find>VERBOSE</find>
+      <find>num_class</find>
+      <find>BATC</find>
+      <find>order</find>
+      <find>OUTPUT_ACC</find>
+      <find>print_score</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Tobias\PycharmProjects\dolezal\src</dir>
@@ -194,8 +194,9 @@
         <option value="$PROJECT_DIR$/src/Individual.py" />
         <option value="$PROJECT_DIR$/src/operators/operatorLib.py" />
         <option value="$PROJECT_DIR$/src/operators/operator.py" />
-        <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/modelNN.py" />
       </list>
     </option>
   </component>
@@ -233,6 +234,12 @@
               <item name="dolezal" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="operators" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dolezal" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dolezal" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="output" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -357,15 +364,15 @@
     <frame x="-8" y="0" width="1751" height="1044" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16044341" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16044341" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49763593" weight="0.32882166" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.4339172" side_tool="true" weight="0.3221154" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48833138" weight="0.32768363" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48366395" weight="0.32768363" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5549363" weight="0.31958762" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49085122" weight="0.20336269" />
       <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49881798" weight="0.32882166" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.5116686" side_tool="true" visible="true" weight="0.21242937" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.5163361" side_tool="true" visible="true" weight="0.21242937" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7125796" weight="0.3974359" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -543,9 +550,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/src/output/accuracy.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://C:/Python36/Lib/site-packages/tensorflow/python/pywrap_tensorflow_internal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -690,13 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="26" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/output/geno.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
@@ -713,16 +710,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/graph.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/modelNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-425">
-          <caret line="174" selection-start-line="174" selection-end-line="174" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/trainAndTest.png">
       <provider selected="true" editor-type-id="images" />
@@ -785,20 +772,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="175" column="29" lean-forward="true" selection-start-line="175" selection-start-column="29" selection-end-line="175" selection-end-column="29" />
+        <state relative-caret-position="2567">
+          <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/src/output/accuracy.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="622">
+          <caret line="81" column="10" selection-start-line="81" selection-end-line="81" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modelNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="120" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

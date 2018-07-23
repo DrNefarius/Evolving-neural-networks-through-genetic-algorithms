@@ -12,16 +12,9 @@ from operator import attrgetter
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import queue
-import sys
 
-
-# matplotlib.use('Agg')
 
 def evolve():
-    '''
-        This function defines all the important things for the EA to work properly
-    :return:
-    '''
     print(str(parameters.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
         parameters.POPULATION_SIZE) + ' Netzen pro Generation.')
 
@@ -49,16 +42,16 @@ def evolve():
         genotype = gp.compile(individual, pset)
         converter = Individual()
         converter.setGenotype(genotype)
-        printGenotype(individual, genotype)
+        print_genotype(individual, genotype)
         result = converter.getPhenotype(individual)
         global noOfNet
-        krs = ModelNN(result, noOfNet)
+        network = ModelNN(result, noOfNet)
         noOfNet += 1
-        print(krs.testAcc)
-        individual.score = krs.testAcc
-        individual.trainAcc = krs.trainAcc
-        scoreGen = krs.testAcc
-        return scoreGen,
+        print(network.test_acc)
+        individual.score = network.test_acc
+        individual.trainAcc = network.train_acc
+        score_gen = network.test_acc
+        return score_gen,
 
     toolbox.register("evaluate", evaluate)
     toolbox.register("mate", gp.cxOnePoint)
@@ -73,38 +66,38 @@ def evolve():
     random.seed(42)  # the meaning of life
     population = toolbox.population(n=parameters.POPULATION_SIZE)
 
-    def logPop(population, compIndex):
-        population.sort(key=attrgetter('fitness'), reverse=True)
-        lastIndex = len(population) - 1
-        comp = compIndex / (parameters.NUMBER_OF_GENERATIONS * 1.0)
-        compl = 'COMPLETE [ ' + str(round(comp * 100, 2)) + ' ] \n'
-        gene = 'BEST SOLUTION: [ ' + str(population[0].score) + ' %] '
-        print(sys.stderr, compl + gene)
-        wrstArr.append(population[lastIndex].score)
-        bestArr.append(population[0].score)
-        trainAcc.append(population[0].trainAcc)
-        testAcc.append(population[0].score)
-        totalScore = 0
-        for ind in population:
-            totalScore += ind.score
-        avgArr.append(totalScore / parameters.POPULATION_SIZE)
+    def log_pop(pop, c_index):
+        pop.sort(key=attrgetter('fitness'), reverse=True)
+        last_index = len(pop) - 1
+        factor = c_index / (parameters.NUMBER_OF_GENERATIONS * 1.0)
+        completion_string = str(round(factor * 100, 2)) + "% abgeschlossen.\n"
+        best_string = 'Bestes Individuum erreicht ' + str(pop[0].score) + '% Genauigkeit.'
+        print(completion_string + best_string)
+        worst.append(pop[last_index].score)
+        best.append(pop[0].score)
+        train_acc.append(pop[0].trainAcc)
+        test_acc.append(pop[0].score)
+        total_score = 0
+        for individual in pop:
+            total_score += individual.score
+        average.append(total_score / parameters.POPULATION_SIZE)
 
     # Data for graph
-    wrstArr = []  # WRST RED
-    avgArr = []  # AVG BLUE
-    bestArr = []  # BEST GREEN
-    trainAcc = []
-    testAcc = []
+    worst = []
+    average = []
+    best = []
+    train_acc = []
+    test_acc = []
 
     # Evaluate the entire generation
-    fitnesses = map(toolbox.evaluate, population)
-    for ind, fit in zip(population, fitnesses):
+    fitness_list = map(toolbox.evaluate, population)
+    for ind, fit in zip(population, fitness_list):
         ind.fitness.values = fit
 
-    compIndex = 1
+    comp_index = 1
     for gen in range(parameters.NUMBER_OF_GENERATIONS):
-        logPop(population, compIndex)
-        compIndex += 1
+        log_pop(population, comp_index)
+        comp_index += 1
         if gen != parameters.NUMBER_OF_GENERATIONS:
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
@@ -122,43 +115,42 @@ def evolve():
                     toolbox.mutate(mutant)
                     del mutant.fitness.values
 
-            # Remove duplicates in the offspring
+            # mutate duplicates
+            dup_counter = 0
             for outer in range(len(offspring)):
                 for inner in range(outer + 1, len(offspring)):
                     if str(offspring[outer]) == str(offspring[inner]):
-                        print(' *')
-                        # list(offspring)[inner] = mutateWithLimit(list(offspring)[inner])
                         toolbox.mutate(offspring[inner])
                         del offspring[inner].fitness.values
+                        dup_counter += 1
+            print(str(dup_counter) + " Duplikate mutiert.")
 
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-            fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
-            for ind, fit in zip(invalid_ind, fitnesses):
+            print(str(len(invalid_ind)) + " Individuen werden ausgewertet.")
+            fitness_list = toolbox.map(toolbox.evaluate, invalid_ind)
+            for ind, fit in zip(invalid_ind, fitness_list):
                 ind.fitness.values = fit
 
             # The population is entirely replaced by the offspring
             population[:] = offspring
 
-    # ------------------------------  PLOT THE TRAIN AND TEST ACCURACY ---------------------------------------------
-    # Data for graph
-    geneArr = range(1, parameters.NUMBER_OF_GENERATIONS + 1)
-    plt.plot(geneArr, trainAcc, 'bo-')  # TRAIN BLUE
-    plt.plot(geneArr, testAcc, 'go-')  # TEST GREEN
+    # create graph
+    gene_arr = range(1, parameters.NUMBER_OF_GENERATIONS + 1)
+    plt.plot(gene_arr, train_acc, 'bo-')
+    plt.plot(gene_arr, test_acc, 'go-')
     b_patch = mpatches.Patch(color='blue', label='TRAIN')
     g_patch = mpatches.Patch(color='green', label='TEST')
     plt.legend(handles=[b_patch, g_patch])
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
     plt.savefig(parameters.OUTPUT_TRAINTEST)
-    # ----------------------------------------------------------------------------------------------------------
     plt.clf()
     plt.cla()
     plt.close()
-    # ------------------------------  PLOT THE EVOLUTION ------------------------------------------------------
-    plt.plot(geneArr, wrstArr, 'ro-')  # WRST RED
-    plt.plot(geneArr, avgArr, 'bo-')  # AVG BLUE
-    plt.plot(geneArr, bestArr, 'go-')  # BEST GREErN
+    plt.plot(gene_arr, worst, 'ro-')
+    plt.plot(gene_arr, average, 'bo-')
+    plt.plot(gene_arr, best, 'go-')
     red_patch = mpatches.Patch(color='red', label='Worst')
     blue_patch = mpatches.Patch(color='blue', label='Average')
     green_patch = mpatches.Patch(color='green', label='Best')
@@ -166,16 +158,15 @@ def evolve():
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
     plt.savefig(parameters.OUTPUT_GRAPH)
-    # ----------------------------------------------------------------------------------------------------------
     return population
 
 
 # -------------- PRINT INDIVIDUAL GENOTYPE -----------------
-def printGenotype(indi, root):
+def print_genotype(indi, root):
     outp = ''
-    genoArr = indexTree(root)
-    for node in genoArr:
-        outp += getWays(node)
+    nodes = index_tree(root)
+    for node in nodes:
+        outp += get_ways(node)
     file = open(parameters.OUTPUT_GENOTYPE_TREE, 'a')
     file.write('\n\n' + str(indi) + '\n')
     if hasattr(indi, 'score'):
@@ -186,7 +177,7 @@ def printGenotype(indi, root):
     file.close()
 
 
-def indexTree(node):
+def index_tree(node):
     que = queue.Queue()
     que.put(node)
     arr = []
@@ -203,7 +194,7 @@ def indexTree(node):
     return arr
 
 
-def getWays(node):
+def get_ways(node):
     outp = ''
     if hasattr(node, 'left'):
         outp += '\"' + str(node.index) + '\"' + '->' + '\"' + str(node.left.index) + '\"' + '\n'
@@ -212,26 +203,26 @@ def getWays(node):
     return outp
 
 
-def printTree(node, space):
-    offset = getOffset(space)
+def print_tree(node, space):
+    offset = get_offset(space)
     if type(node) is not 'str':
         print(offset + node.getType())
     if not node.isTerminal():
         if hasattr(node, 'left'):
-            printTree(node.left, space + 1)
+            print_tree(node.left, space + 1)
         if hasattr(node, 'right'):
-            printTree(node.right, space + 1)
+            print_tree(node.right, space + 1)
     return
 
 
-def getOffset(count):
-    str = ''
+def get_offset(count):
+    offset = ''
     for i in range(0, count):
-        str = str + '\t'
-    return str
+        offset = offset + '\t'
+    return offset
 
 
-def debugIndividual(individual):
+def debug_individual(individual):
     pset = gp.PrimitiveSet('main', 0)
     indi = Individual()
     for key, value in indi.functions.items():
@@ -242,7 +233,7 @@ def debugIndividual(individual):
     indi.setGenotype(genotype)
     phenotype = indi.getPhenotype(individual)
     network = ModelNN(phenotype, 9999)
-    return network.testAcc, network.trainAcc
+    return network.test_acc, network.train_acc
 
 
 def main():
@@ -265,7 +256,7 @@ def debug():
     individual = "PAR(DOUB(SEQ(DOUB(RELU(PAR(PAR(PAR(HALF(SOFTSIGN(ELU(DOUB(RELU(RELU('END')))))), 'END'), 'END'), RELU('END')))), 'END')), RELU(RELU('END')))"
     # SEQ(PAR(PAR(PAR(PAR(PAR(TANH('END'), 'END'), DOUB(DOUB('END'))), 'END'), 'END'), DOUB('END')), TANH('END'))
     # PAR(DOUB(SEQ(DOUB(RELU(PAR(PAR(PAR(HALF(SOFTSIGN(ELU(DOUB(RELU(RELU('END')))))), 'END'), 'END'), RELU('END')))), 'END')), RELU(RELU('END')))
-    accs = debugIndividual(individual)
+    accs = debug_individual(individual)
     print(accs)
 
 

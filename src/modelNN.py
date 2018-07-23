@@ -2,21 +2,14 @@ import keras
 import tensorflow as tf
 from keras.models import Model
 from keras.layers import Input, Dense
-from keras.utils import np_utils
-from keras.utils import plot_model
 
-# use convolutional neural networks
-from keras.layers import Dropout, Activation, Flatten
-from keras.optimizers import Adam
+from keras.layers import Dropout, Flatten
 from keras.layers.normalization import BatchNormalization
 from keras.utils import np_utils
-from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D, GlobalAveragePooling2D
-from keras.layers.advanced_activations import LeakyReLU
-from keras.preprocessing.image import ImageDataGenerator
+from keras.layers import Conv2D, MaxPooling2D
 
 from keras.datasets import mnist
 from keras.datasets import cifar10
-import sys
 
 from src.convnetdrawer.convnet_drawer import Model as drawModel, drawConv2D, drawMaxPooling2D, drawFlatten, drawDense
 from src.convnetdrawer.matplotlib_util import save_model_to_file
@@ -28,38 +21,21 @@ from keras import backend as K
 
 class ModelNN(object):
 
-    def __init__(self, root, noOfNet):
+    def __init__(self, root, no_of_net):
         sess = tf.Session()
         K.set_session(sess)
-        temp = self.createModel(root, noOfNet)
-        self.testAcc = temp[1]
-        self.trainAcc = temp[0]
+        temp = self.createModel(root, no_of_net)
+        self.test_acc = temp[1]
+        self.train_acc = temp[0]
 
-    def createModel(self, pheno, noOfNet):
-        phenoArr = pheno[0]
+    def createModel(self, pheno, no_of_net):
+        pheno_arr = pheno[0]
         order = pheno[1]
 
-        # ----------- NETWORK PARAMETERS -----------
-        # default activation function is RELU
-        actFuncExit = parameters.ACTIVATION_FUNCTION_FOR_EXIT
-        optimizer = parameters.OPTIMIZER
-        lossFunc = parameters.LOSS_FUNCTION
-        # ----------- MODEL FIT PARAMETERS - MNIST -----------
-        # import paramater values
-        inpDime = parameters.INPUT_DIMENSION
-        outDime = parameters.OUTPUT_DIMENSION
-        num_epoch = parameters.LEARN_EPOCH_COUNT
-
-        batch_size = parameters.BATCH_SIZE
-        num_class = parameters.OUTPUT_CLASS_COUNT
-        VERBOSE = parameters.VERBOSE
-        isConvolution = parameters.USE_CONVOLUTION_NN
-
-        seed = 1337
+        seed = 42
         n_iter = 1
         train_size = parameters.TRAIN_SIZE
 
-        # ----------- PREPARE TEST & TRAIN DATASET -----------
         if parameters.DATASET == 'MNIST':
             (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
             if train_size < 60000:
@@ -68,24 +44,26 @@ class ModelNN(object):
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
-            if isConvolution:
-                X_train = X_train.reshape(train_size, inpDime[0], inpDime[0], inpDime[1])
-                X_test = X_test.reshape(10000, inpDime[0], inpDime[0], inpDime[1])
+            if parameters.USE_CONVOLUTION_NN:
+                X_train = X_train.reshape(train_size, parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0],
+                                          parameters.INPUT_DIMENSION[1])
                 X_train = X_train.astype('float32')
-                X_test = X_test.astype('float32')
                 X_train /= 255
+                Y_train = np_utils.to_categorical(Y_train, parameters.OUTPUT_CLASS_COUNT)
+                X_test = X_test.reshape(10000, parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0],
+                                        parameters.INPUT_DIMENSION[1])
+                X_test = X_test.astype('float32')
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, num_class)
-                Y_test = np_utils.to_categorical(Y_test, num_class)
+                Y_test = np_utils.to_categorical(Y_test, parameters.OUTPUT_CLASS_COUNT)
             else:
-                X_train = X_train.reshape(train_size, inpDime)
-                X_test = X_test.reshape(10000, inpDime)
+                X_train = X_train.reshape(train_size, parameters.INPUT_DIMENSION)
                 X_train = X_train.astype('float32')
-                X_test = X_test.astype('float32')
                 X_train /= 255
+                Y_train = np_utils.to_categorical(Y_train, parameters.OUTPUT_CLASS_COUNT)
+                X_test = X_test.reshape(10000, parameters.INPUT_DIMENSION)
+                X_test = X_test.astype('float32')
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, num_class)
-                Y_test = np_utils.to_categorical(Y_test, num_class)
+                Y_test = np_utils.to_categorical(Y_test, parameters.OUTPUT_CLASS_COUNT)
 
         if parameters.DATASET == 'CIFAR':
             (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
@@ -96,138 +74,128 @@ class ModelNN(object):
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
 
-            if isConvolution:
-                X_train = X_train.reshape(train_size, inpDime[0], inpDime[0], inpDime[1])
-                X_test = X_test.reshape(10000, inpDime[0], inpDime[0], inpDime[1])
+            if parameters.USE_CONVOLUTION_NN:
+                X_train = X_train.reshape(train_size, parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0],
+                                          parameters.INPUT_DIMENSION[1])
+                X_test = X_test.reshape(10000, parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0],
+                                        parameters.INPUT_DIMENSION[1])
                 X_train = X_train.astype('float32')
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, num_class)
-                Y_test = np_utils.to_categorical(Y_test, num_class)
+                Y_train = np_utils.to_categorical(Y_train, parameters.OUTPUT_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, parameters.OUTPUT_CLASS_COUNT)
             else:
-                X_train = X_train.reshape(train_size, inpDime)
-                X_test = X_test.reshape(10000, inpDime)
+                X_train = X_train.reshape(train_size, parameters.INPUT_DIMENSION)
+                X_test = X_test.reshape(10000, parameters.INPUT_DIMENSION)
                 X_train = X_train.astype('float32')
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, num_class)
-                Y_test = np_utils.to_categorical(Y_test, num_class)
+                Y_train = np_utils.to_categorical(Y_train, parameters.OUTPUT_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, parameters.OUTPUT_CLASS_COUNT)
 
         # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
-        modelArr = [None] * len(phenoArr)
-        listOfLayers = []
-        if isConvolution:
-            modelArr[0] = (Input(shape=(inpDime[0], inpDime[0], inpDime[1])))
-            model = drawModel(input_shape=(inpDime[0], inpDime[0], inpDime[1]))
+        model_arr = [None] * len(pheno_arr)
+        list_of_layers = []
+        if parameters.USE_CONVOLUTION_NN:
+            model_arr[0] = (Input(
+                shape=(parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[1])))
+            model = drawModel(input_shape=(
+                parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[0], parameters.INPUT_DIMENSION[1]))
         else:
-            modelArr[0] = (Input(shape=(inpDime,)))
-            listOfLayers.append((round(inpDime / 100), 'relu'))
+            model_arr[0] = (Input(shape=(parameters.INPUT_DIMENSION,)))
+            list_of_layers.append((round(parameters.INPUT_DIMENSION / 100), 'relu'))
         output_layers = []
-        # --- LAYERS
+
         index = 0
-        safety = 3 * len(order)
         while len(order) > 0:
-            if safety < 0:
-                print('ERROR: KERAS BUILD MODEL LOOPING')
-                return 0
-            safety -= 1
             index = index % len(order)
             order_index = order[index]
-            layer = phenoArr[order_index]  # iterate through pheno nodes
+            layer = pheno_arr[order_index]  # iterate through pheno nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
-            isReady = True
+            is_ready = True
             for inp in layer.inputs:
-                if modelArr[inp.index] is None:
-                    isReady = False
+                if model_arr[inp.index] is None:
+                    is_ready = False
                     break
 
-            if isReady:
+            if is_ready:
                 if len(layer.inputs) > 1:
-                    layersToConcatenate = []
+                    layers_to_concatenate = []
                     for inp in layer.inputs:
-                        layersToConcatenate.append(modelArr[inp.index])
-                    x = keras.layers.concatenate(layersToConcatenate)
+                        layers_to_concatenate.append(model_arr[inp.index])
+                    x = keras.layers.concatenate(layers_to_concatenate)
                 else:
                     for inp in layer.inputs:
-                        x = (modelArr[inp.index])
+                        x = (model_arr[inp.index])
                         # for layers with only one input create new layer and use the layer
-                if not isConvolution:
-                    modelArr[order_index] = Dense(layer.neuron_count, activation=layer.act_func)(x)
-                    listOfLayers.append((round(layer.neuron_count / 100), layer.act_func))
+                if not parameters.USE_CONVOLUTION_NN:
+                    model_arr[order_index] = Dense(layer.neuron_count, activation=layer.act_func)(x)
+                    list_of_layers.append((round(layer.neuron_count / 100), layer.act_func))
                 else:
                     im_dim = parameters.IMG_DIMENSION
                     kernel_size = layer.kernel_size if layer.kernel_size < im_dim else im_dim
                     pool_size = layer.pool_size if layer.pool_size < im_dim else im_dim
                     dropout = layer.dropout
-                    x = modelArr[inp.index]
+                    x = model_arr[inp.index]
                     x = Conv2D(filters=layer.filter_count, kernel_size=kernel_size,
                                strides=1, padding='same', activation=layer.act_func)(x)
                     model.add(drawConv2D(filters=layer.filter_count, kernel_size=(kernel_size, kernel_size),
-                                     strides=(1, 1), padding='same'))
+                                         strides=(1, 1), padding='same'))
                     if layer.maxPooling:
                         x = MaxPooling2D(pool_size=(pool_size, pool_size),
                                          strides=1, padding='same')(x)
                         model.add(drawMaxPooling2D(pool_size=(pool_size, pool_size),
-                                               strides=(1, 1), padding='same'))
+                                                   strides=(1, 1), padding='same'))
 
                     if layer.dropout > 0:
                         Dropout(dropout)(x)
                         # model.add(drawDropout(dropout))
-                    modelArr[order_index] = x
+                    model_arr[order_index] = x
 
                 if len(layer.outputs) == 0:  # mark all ouput layers
-                    output_layers.append(modelArr[order_index])
+                    output_layers.append(model_arr[order_index])
                 order.remove(order_index)
                 index = 0
             else:
                 index += 1
                 # -----
         # ----------- CREATE NETWORK -----------
-        input_layer = modelArr[0]
+        input_layer = model_arr[0]
         if len(output_layers) > 1:
             x = keras.layers.concatenate(output_layers)
         else:
             x = output_layers[0]
-        if isConvolution:
+        if parameters.USE_CONVOLUTION_NN:
             x = Flatten()(x)
             model.add(drawFlatten())
             BatchNormalization()(x)
             # model.add(drawBatchNormalization())
-            x = Dense(parameters.MIN_NEURON_THRESHOLD, activation=actFuncExit)(x)
+            x = Dense(parameters.MIN_NEURON_THRESHOLD, activation=parameters.ACTIVATION_FUNCTION_FOR_EXIT)(x)
             model.add(drawDense(parameters.MIN_NEURON_THRESHOLD))
             x = Dropout(0.5)(x)
             # model.add(Dropout(0.5))
-        output_layer = Dense(outDime, activation=actFuncExit)(x)
-        if isConvolution:
-            model.add(drawDense(outDime))
-            save_model_to_file(model, "CNN" + str(noOfNet) + ".pdf")
+        output_layer = Dense(parameters.OUTPUT_DIMENSION, activation=parameters.ACTIVATION_FUNCTION_FOR_EXIT)(x)
+        if parameters.USE_CONVOLUTION_NN:
+            model.add(drawDense(parameters.OUTPUT_DIMENSION))
+            save_model_to_file(model, "CNN" + str(no_of_net) + ".pdf")
         else:
-            listOfLayers.append((round(outDime), actFuncExit))
+            list_of_layers.append((round(parameters.OUTPUT_DIMENSION), parameters.ACTIVATION_FUNCTION_FOR_EXIT))
             # TODO: only draw best of each generation in a file
-            # plotNN.DrawNN(listOfLayers).draw()
+            # plotNN.DrawNN(list_of_layers).draw()
 
-        # --------------------------------------------------------------------------------------------------------------
-        # ----------- MODEL EVALUATE-----------
         model = Model(inputs=input_layer, outputs=output_layer)
-        model.compile(loss=lossFunc, optimizer=optimizer, metrics=['accuracy'])
+        model.compile(loss=parameters.LOSS_FUNCTION, optimizer=parameters.OPTIMIZER, metrics=['accuracy'])
         model.fit(X_train, Y_train,
-                  batch_size=batch_size,
-                  epochs=num_epoch,
-                  verbose=VERBOSE,
+                  batch_size=parameters.BATCH_SIZE,
+                  epochs=parameters.LEARN_EPOCH_COUNT,
+                  verbose=parameters.VERBOSE,
                   validation_data=(X_test, Y_test))
 
-        # ----------- NETWORK OUTPUT ACCURACY-----------
-        score = model.evaluate(X_test, Y_test, verbose=VERBOSE)
+        score = model.evaluate(X_test, Y_test, verbose=parameters.VERBOSE)
         testScore = score[1] * 100
-        score = model.evaluate(X_train, Y_train, verbose=VERBOSE)
+        score = model.evaluate(X_train, Y_train, verbose=parameters.VERBOSE)
         trainScore = score[1] * 100
-        return trainScore, testScore, listOfLayers
-
-    def printScore(self, test, train):
-        outp = ' ---- TRAIN: ' + str(train * 100) + ' ------ TEST: ' + str(test * 100)
-        file = open(parameters.OUTPUT_ACCURACY, 'a')
-        file.write('\n' + outp)
-        file.close()
+        return trainScore, testScore, list_of_layers

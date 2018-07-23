@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48caaa3b-9541-4378-9381-3864b1106e44" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Individual.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evolution/geno.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/geno.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evolution/pheno.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/pheno.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evolution/treeconverter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/treeconverter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modelNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/operator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/operator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/operatorLib.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/operatorLib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +23,8 @@
       <file leaf-file-name="operator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/operator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="136">
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -26,8 +32,8 @@
       <file leaf-file-name="Individual.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Individual.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
+            <state relative-caret-position="385">
+              <caret line="28" column="34" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="34" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -35,23 +41,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="operatorLib.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/operatorLib.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="40" column="27" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="27" />
-              <folding>
-                <element signature="e#111#153#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+      <file leaf-file-name="graph_6k_mnist_15_15_100nstart_25epoch.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/output/graph_6k_mnist_15_15_100nstart_25epoch.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="trainAndTest_6k_mnist_15_15_100nstart_25epoch.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_6k_mnist_15_15_100nstart_25epoch.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2567">
-              <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
+            <state relative-caret-position="185">
+              <caret line="187" column="49" selection-start-line="187" selection-start-column="49" selection-end-line="187" selection-end-column="49" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -59,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="geno.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/evolution/geno.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="476">
+              <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -71,8 +75,8 @@
       <file leaf-file-name="pheno.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evolution/pheno.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+            <state relative-caret-position="810">
+              <caret line="58" column="37" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -80,8 +84,8 @@
       <file leaf-file-name="treeconverter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evolution/treeconverter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+            <state relative-caret-position="1258">
+              <caret line="74" column="16" selection-start-line="74" selection-start-column="16" selection-end-line="74" selection-end-column="16" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -92,8 +96,8 @@
       <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="81" column="10" selection-start-line="81" selection-end-line="81" selection-end-column="10" />
+            <state relative-caret-position="357">
+              <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -101,8 +105,8 @@
       <file leaf-file-name="modelNN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/modelNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="120" selection-end-column="36" />
+            <state relative-caret-position="385">
+              <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -121,9 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>individual</find>
-      <find>evalGenotype</find>
-      <find>Drop</find>
       <find>Model</find>
       <find>kernel_size</find>
       <find>ModelNN</find>
@@ -149,8 +150,11 @@
       <find>num_class</find>
       <find>BATC</find>
       <find>order</find>
-      <find>OUTPUT_ACC</find>
       <find>print_score</find>
+      <find>OUTPUT_ACC</find>
+      <find>get_type</find>
+      <find>act_func</find>
+      <find>activation_func</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Tobias\PycharmProjects\dolezal\src</dir>
@@ -189,21 +193,23 @@
         <option value="$PROJECT_DIR$/src/genotype/Individual.py" />
         <option value="$PROJECT_DIR$/src/phenotype/phenoConvertor.py" />
         <option value="$PROJECT_DIR$/src/genotype/gnode.py" />
-        <option value="$PROJECT_DIR$/src/evolution/geno.py" />
-        <option value="$PROJECT_DIR$/src/evolution/pheno.py" />
-        <option value="$PROJECT_DIR$/src/Individual.py" />
         <option value="$PROJECT_DIR$/src/operators/operatorLib.py" />
         <option value="$PROJECT_DIR$/src/operators/operator.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/Individual.py" />
+        <option value="$PROJECT_DIR$/src/evolution/treeconverter.py" />
+        <option value="$PROJECT_DIR$/src/evolution/pheno.py" />
+        <option value="$PROJECT_DIR$/src/evolution/geno.py" />
         <option value="$PROJECT_DIR$/src/modelNN.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-12" />
-    <option name="width" value="2627" />
-    <option name="height" value="1566" />
+    <option name="x" value="49150" />
+    <option name="y" value="49150" />
+    <option name="width" value="3861" />
+    <option name="height" value="2181" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -361,18 +367,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1751" height="1044" extended-state="0" />
+    <frame x="32767" y="32767" width="2574" height="1454" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16044341" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10873863" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49763593" weight="0.32882166" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.4339172" side_tool="true" weight="0.3221154" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.48366395" weight="0.32768363" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5549363" weight="0.31958762" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.46849474" weight="0.32768363" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6255437" visible="true" weight="0.22100313" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49085122" weight="0.20336269" />
       <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49881798" weight="0.32882166" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.5163361" side_tool="true" visible="true" weight="0.21242937" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.37445632" side_tool="true" visible="true" weight="0.22100313" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7125796" weight="0.3974359" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -438,13 +444,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/Individual.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -510,20 +509,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/deap/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="184" selection-start-line="184" selection-end-line="184" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/deap/gp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="473" selection-start-line="473" selection-end-line="473" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/h5py/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -561,9 +546,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-28701" />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_with_activations.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_with_activations_wrong.png">
       <provider selected="true" editor-type-id="images" />
@@ -633,9 +615,6 @@
           <caret line="510" column="19" selection-start-line="510" selection-start-column="8" selection-end-line="510" selection-end-column="19" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/output/graph_with_activations.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/graph_with_activations_wrong.png">
       <provider selected="true" editor-type-id="images" />
@@ -721,53 +700,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/geno.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="3" lean-forward="true" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/pheno.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/treeconverter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/operatorLib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="40" column="27" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="27" />
           <folding>
             <element signature="e#111#153#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/operator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -779,30 +717,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/accuracy.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_with_activations.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/graph_with_activations.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="66" column="40" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/graph_6k_mnist_15_15_100nstart_25epoch.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_6k_mnist_15_15_100nstart_25epoch.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/operator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Individual.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="28" column="34" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolution/treeconverter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1258">
+          <caret line="74" column="16" selection-start-line="74" selection-start-column="16" selection-end-line="74" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolution/pheno.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="58" column="37" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2567">
-          <caret line="164" column="15" selection-start-line="164" selection-start-column="15" selection-end-line="164" selection-end-column="15" />
+        <state relative-caret-position="185">
+          <caret line="187" column="49" selection-start-line="187" selection-start-column="49" selection-end-line="187" selection-end-column="49" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/output/accuracy.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parameters.py">
+    <entry file="file://$PROJECT_DIR$/src/evolution/geno.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="81" column="10" selection-start-line="81" selection-end-line="81" selection-end-column="10" />
+        <state relative-caret-position="476">
+          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modelNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="120" selection-end-column="36" />
+        <state relative-caret-position="385">
+          <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

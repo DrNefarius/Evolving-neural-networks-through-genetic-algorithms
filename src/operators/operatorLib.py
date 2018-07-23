@@ -42,12 +42,12 @@ class OperatorLib(object):
 
         def func(node, index):
             next = pheno(index, node.neuron_count)
-            next.addInput(node)
-            next.copyOutputs(node)
+            next.add_input(node)
+            next.copy_outputs(node)
             for n in node.outputs:
                 n.inputs.remove(node)
             node.outputs = []
-            node.addOutput(next)
+            node.add_output(next)
             return node, next  # return LEFT, RIGHT
 
         operator.setPhenoFunc(func)
@@ -58,8 +58,8 @@ class OperatorLib(object):
 
         def func(node, index):
             next = pheno(index, node.neuron_count)
-            next.copyInputs(node)
-            next.copyOutputs(node)
+            next.copy_inputs(node)
+            next.copy_outputs(node)
             return node, next  # return LEFT, RIGHT
 
         operator.setPhenoFunc(func)
@@ -69,7 +69,7 @@ class OperatorLib(object):
         operator = Operator('DOUB', 1)
 
         def func(node):
-            node.multiplyNeuronCount(2)
+            node.multiply_neuron_count(2)
             return node
 
         operator.setPhenoFunc(func)
@@ -79,7 +79,7 @@ class OperatorLib(object):
         operator = Operator('HALF', 1)
 
         def func(node):
-            node.divideNeuronCount(2)
+            node.divide_neuron_count(2)
             return node
 
         operator.setPhenoFunc(func)
@@ -153,7 +153,7 @@ class OperatorLib(object):
         operator = Operator('SOFTMAX', 1)
 
         def func(node):
-            node.setActivation('softmax')
+            node.set_activation('softmax')
             return node
 
         operator.setPhenoFunc(func)
@@ -163,7 +163,7 @@ class OperatorLib(object):
         operator = Operator('ELU', 1)
 
         def func(node):
-            node.setActivation('elu')
+            node.set_activation('elu')
             return node
 
         operator.setPhenoFunc(func)
@@ -173,7 +173,7 @@ class OperatorLib(object):
         operator = Operator('SOFTPLUS', 1)
 
         def func(node):
-            node.setActivation('softplus')
+            node.set_activation('softplus')
             return node
 
         operator.setPhenoFunc(func)
@@ -183,7 +183,7 @@ class OperatorLib(object):
         operator = Operator('SOFTSIGN', 1)
 
         def func(node):
-            node.setActivation('softsign')
+            node.set_activation('softsign')
             return node
 
         operator.setPhenoFunc(func)
@@ -193,7 +193,7 @@ class OperatorLib(object):
         operator = Operator('RELU', 1)
 
         def func(node):
-            node.setActivation('relu')
+            node.set_activation('relu')
             return node
 
         operator.setPhenoFunc(func)
@@ -203,7 +203,7 @@ class OperatorLib(object):
         operator = Operator('TANH', 1)
 
         def func(node):
-            node.setActivation('tanh')
+            node.set_activation('tanh')
             return node
 
         operator.setPhenoFunc(func)
@@ -213,7 +213,7 @@ class OperatorLib(object):
         operator = Operator('SIGMOID', 1)
 
         def func(node):
-            node.setActivation('sigmoid')
+            node.set_activation('sigmoid')
             return node
 
         operator.setPhenoFunc(func)
@@ -223,7 +223,7 @@ class OperatorLib(object):
         operator = Operator('HSIGMOID', 1)
 
         def func(node):
-            node.setActivation('hard_sigmoid')
+            node.set_activation('hard_sigmoid')
             return node
 
         operator.setPhenoFunc(func)

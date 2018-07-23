@@ -23,16 +23,16 @@ class Operator(object):
     def unary(self, first):
         root = geno(self.name)
         left = geno(first) if isinstance(first, str) else first
-        root.setLeft(left)
-        left.setParent(root)
+        root.set_left(left)
+        left.set_parent(root)
         return root
 
     def binary(self, first, second):
         root = geno(self.name)
         left = geno(first) if isinstance(first, str) else first
         right = geno(second) if isinstance(second, str) else second
-        root.setLeft(left)
-        root.setRight(right)
-        left.setParent(root)
-        right.setParent(root)
+        root.set_left(left)
+        root.set_right(right)
+        left.set_parent(root)
+        right.set_parent(root)
         return root

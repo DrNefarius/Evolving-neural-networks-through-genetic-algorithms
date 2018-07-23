@@ -8,8 +8,7 @@ class pheno(object):
         self.outputs = []
         self.index = index
 
-        # DEFINE LAYER
-        self.act_func = parameters.ACTIVATION_FUNCTION
+        self.activation_function = parameters.ACTIVATION_FUNCTION
         self.maxThreshold = parameters.MAX_NEURON_THRESHOLD
         self.minThreshold = parameters.MIN_NEURON_THRESHOLD
         self.layer_type = parameters.ACTIVATION_FUNCTION
@@ -28,47 +27,47 @@ class pheno(object):
     def __eq__(self, other):
         return self.index == other.index
 
-    def addInput(self, node):
+    def add_input(self, node):
         if node not in self.inputs:
             self.inputs.append(node)
 
-    def addOutput(self, node):
+    def add_output(self, node):
         if node not in self.outputs:
             self.outputs.append(node)
 
-    def copyInputs(self, node):
+    def copy_inputs(self, node):
         for i in node.inputs:
-            self.addInput(i)
-            i.addOutput(self)
+            self.add_input(i)
+            i.add_output(self)
 
-    def swapInputNode(self, old, new):
+    def swap_input_node(self, old, new):
         self.inputs.remove(old)
         self.inputs.append(new)
 
-    def multiplyNeuronCount(self, multi):
+    def multiply_neuron_count(self, multi):
         count = self.neuron_count * multi
         if count < self.maxThreshold:
             self.neuron_count = count
         else:
             self.neuron_count = self.maxThreshold
 
-    def divideNeuronCount(self, div):
+    def divide_neuron_count(self, div):
         count = int(self.neuron_count / div)
         if count < parameters.MIN_NEURON_THRESHOLD:
             self.neuron_count = self.minThreshold
         else:
             self.neuron_count = count
 
-    def setActivation(self, activation):
-        self.act_func = activation
+    def set_activation(self, activation):
+        self.activation_function = activation
 
-    def copyOutputs(self, node):
+    def copy_outputs(self, node):
         for o in node.outputs:
-            self.addOutput(o)
-            o.addInput(self)
+            self.add_output(o)
+            o.add_input(self)
 
-    def setType(self, type):
+    def set_type(self, type):
         self.type = type
 
-    def getType(self):
+    def get_type(self):
         return self.type

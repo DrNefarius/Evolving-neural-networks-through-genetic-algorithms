@@ -24,11 +24,11 @@ class ModelNN(object):
     def __init__(self, root, no_of_net):
         sess = tf.Session()
         K.set_session(sess)
-        temp = self.createModel(root, no_of_net)
+        temp = self.create_model(root, no_of_net)
         self.test_acc = temp[1]
         self.train_acc = temp[0]
 
-    def createModel(self, pheno, no_of_net):
+    def create_model(self, pheno, no_of_net):
         pheno_arr = pheno[0]
         order = pheno[1]
 
@@ -132,8 +132,8 @@ class ModelNN(object):
                         x = (model_arr[inp.index])
                         # for layers with only one input create new layer and use the layer
                 if not parameters.USE_CONVOLUTION_NN:
-                    model_arr[order_index] = Dense(layer.neuron_count, activation=layer.act_func)(x)
-                    list_of_layers.append((round(layer.neuron_count / 100), layer.act_func))
+                    model_arr[order_index] = Dense(layer.neuron_count, activation=layer.activation_function)(x)
+                    list_of_layers.append((round(layer.neuron_count / 100), layer.activation_function))
                 else:
                     im_dim = parameters.IMG_DIMENSION
                     kernel_size = layer.kernel_size if layer.kernel_size < im_dim else im_dim
@@ -141,7 +141,7 @@ class ModelNN(object):
                     dropout = layer.dropout
                     x = model_arr[inp.index]
                     x = Conv2D(filters=layer.filter_count, kernel_size=kernel_size,
-                               strides=1, padding='same', activation=layer.act_func)(x)
+                               strides=1, padding='same', activation=layer.activation_function)(x)
                     model.add(drawConv2D(filters=layer.filter_count, kernel_size=(kernel_size, kernel_size),
                                          strides=(1, 1), padding='same'))
                     if layer.maxPooling:

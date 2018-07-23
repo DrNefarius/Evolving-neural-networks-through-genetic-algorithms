@@ -19,14 +19,14 @@ class Individual(object):
         self.operators = opLib.getOperators()
         for op in self.operators:
             self.functions[op.name] = (op.func, op.arity, op.name)
-            self.phenofunctions[op.name] = (op.phenoFunc, op.arity)
+            self.phenofunctions[op.name] = (op.phenofunction, op.arity)
 
     def setGenotype(self, genotype):
         self.genotype = genotype
 
     def getPhenotype(self, individual):
         phc = PhenoConvertor(self.phenofunctions)
-        result = phc.resolvePheno(self.genotype, individual)  # Conversion from genotype to phenotype
+        result = phc.resolve_pheno(self.genotype, individual)  # Conversion from genotype to phenotype
         self.phenotype = result[0]
         return result
 

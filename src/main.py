@@ -185,7 +185,7 @@ def index_tree(node):
     while not que.empty():
         node = que.get()
         arr.append(node)
-        node.index = str(index) + '_' + node.getType()
+        node.index = str(index) + '_' + node.get_type()
         index = index + 1
         if hasattr(node, 'left'):
             que.put(node.left)
@@ -206,8 +206,8 @@ def get_ways(node):
 def print_tree(node, space):
     offset = get_offset(space)
     if type(node) is not 'str':
-        print(offset + node.getType())
-    if not node.isTerminal():
+        print(offset + node.get_type())
+    if not node.is_terminal():
         if hasattr(node, 'left'):
             print_tree(node.left, space + 1)
         if hasattr(node, 'right'):

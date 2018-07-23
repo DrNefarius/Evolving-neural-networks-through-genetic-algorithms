@@ -11,26 +11,26 @@ class geno(object):
         if type is not None:
             self.type = type
 
-    def setType(self, type):
+    def set_type(self, type):
         self.type = type
 
-    def setParent(self, node):
+    def set_parent(self, node):
         self.parent = node
 
-    def setRight(self, node):
+    def set_right(self, node):
         self.right = node
 
-    def setLeft(self, node):
+    def set_left(self, node):
         self.left = node
 
-    def getRight(self):
+    def get_right(self):
         return self.right
 
-    def getLeft(self):
+    def get_left(self):
         return self.left
 
-    def getType(self):
+    def get_type(self):
         return self.type
 
-    def isTerminal(self):
+    def is_terminal(self):
         return self.type == 'END'

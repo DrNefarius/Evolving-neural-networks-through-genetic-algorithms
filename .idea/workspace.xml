@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48caaa3b-9541-4378-9381-3864b1106e44" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dolezal.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/evolution/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/evolution/geno.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/operators/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genotype/Individual.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Individual.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genotype/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genotype/gnode.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genotype/operator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/operator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genotype/operatorLib.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/operatorLib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/phenotype/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/phenotype/modelNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/phenotype/phenoConvertor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/treeconverter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/phenotype/pnode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/pheno.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="369">
@@ -70,6 +55,15 @@
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -187,7 +181,6 @@
         <option value="$PROJECT_DIR$/src/convnetdrawer/matplotlib_util.py" />
         <option value="$PROJECT_DIR$/src/convnetdrawer/pptx_util.py" />
         <option value="$PROJECT_DIR$/src/convnetdrawer/convnet_drawer.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/symbreg.py" />
         <option value="$PROJECT_DIR$/src/parameters.py" />
@@ -202,6 +195,7 @@
         <option value="$PROJECT_DIR$/src/operators/operatorLib.py" />
         <option value="$PROJECT_DIR$/src/operators/operator.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -636,13 +630,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="5" lean-forward="true" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/output/graph_with_activations.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -805,6 +792,13 @@
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,7 @@
 from src import parameters
 
 
-class pheno(object):
+class Pheno(object):
 
     def __init__(self, index, neuroncount=parameters.NEURON_COUNT):
         self.inputs = []

@@ -80,8 +80,8 @@ OUTPUT = "C:\\Users\\Tobias\\PycharmProjects\\dolezal\\src"  # for server run
 
 OUTPUT_MUTATION_CHANGE = OUTPUT + '\\output\\mutchanges.txt'
 OUTPUT_ACCURACY = OUTPUT + '\\output\\accuracy.txt'
-OUTPUT_GENOTYPE_TREE = OUTPUT + '\\output\\geno.txt'
-OUTPUT_PHENOTYPE_TREE = OUTPUT + '\\output\\pheno.txt'
+OUTPUT_GENOTYPE_TREE = OUTPUT + '\\output\\Geno.txt'
+OUTPUT_PHENOTYPE_TREE = OUTPUT + '\\output\\Pheno.txt'
 OUTPUT_MODEL = OUTPUT + '\\output\\model_'
 OUTPUT_GRAPH = OUTPUT + '\\output\\graph.png'
 OUTPUT_TRAINTEST = OUTPUT + '\\output\\trainAndTest.png'

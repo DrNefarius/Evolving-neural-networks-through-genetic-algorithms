@@ -1,5 +1,5 @@
 from operators.operator import Operator
-from src.evolution.pheno import pheno
+from src.evolution.pheno import Pheno
 from src import parameters
 
 
@@ -41,7 +41,7 @@ class OperatorLib(object):
         operator = Operator('SEQ', 2)
 
         def func(node, index):
-            next = pheno(index, node.neuron_count)
+            next = Pheno(index, node.neuron_count)
             next.add_input(node)
             next.copy_outputs(node)
             for n in node.outputs:
@@ -57,7 +57,7 @@ class OperatorLib(object):
         operator = Operator('PAR', 2)
 
         def func(node, index):
-            next = pheno(index, node.neuron_count)
+            next = Pheno(index, node.neuron_count)
             next.copy_inputs(node)
             next.copy_outputs(node)
             return node, next  # return LEFT, RIGHT

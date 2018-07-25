@@ -1,4 +1,4 @@
-from evolution.geno import geno
+from evolution.geno import Geno
 
 
 class Operator(object):
@@ -21,16 +21,16 @@ class Operator(object):
         self.phenofunction = function
 
     def unary(self, first):
-        root = geno(self.name)
-        left = geno(first) if isinstance(first, str) else first
+        root = Geno(self.name)
+        left = Geno(first) if isinstance(first, str) else first
         root.set_left(left)
         left.set_parent(root)
         return root
 
     def binary(self, first, second):
-        root = geno(self.name)
-        left = geno(first) if isinstance(first, str) else first
-        right = geno(second) if isinstance(second, str) else second
+        root = Geno(self.name)
+        left = Geno(first) if isinstance(first, str) else first
+        right = Geno(second) if isinstance(second, str) else second
         root.set_left(left)
         root.set_right(right)
         left.set_parent(root)

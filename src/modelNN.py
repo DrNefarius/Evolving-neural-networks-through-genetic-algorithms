@@ -112,7 +112,7 @@ class ModelNN(object):
         while len(order) > 0:
             index = index % len(order)
             order_index = order[index]
-            layer = pheno_arr[order_index]  # iterate through pheno nodes
+            layer = pheno_arr[order_index]  # iterate through Pheno nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
             is_ready = True

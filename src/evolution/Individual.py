@@ -1,6 +1,6 @@
 from operators.operator_lib import OperatorLib
-from evolution.geno import geno
-from src.evolution.treeconverter import converter
+from evolution.geno import Geno
+from src.evolution.treeconverter import Converter
 
 
 class Individual(object):
@@ -11,7 +11,7 @@ class Individual(object):
         self.register_operators()
 
         # --- Define Tree ---
-        root = geno()
+        root = Geno()
         self.root = root
 
     def register_operators(self):
@@ -25,7 +25,7 @@ class Individual(object):
         self.genotype = genotype
 
     def get_phenotype(self, individual):
-        conv = converter(self.phenofunctions)
+        conv = Converter(self.phenofunctions)
         result = conv.resolve_pheno(self.genotype, individual)  # Conversion from genotype to phenotype
         self.phenotype = result[0]
         return result

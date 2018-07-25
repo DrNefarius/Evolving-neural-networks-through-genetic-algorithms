@@ -1,9 +1,9 @@
-from src.evolution.pheno import pheno
+from src.evolution.pheno import Pheno
 import queue
 from src import parameters
 
 
-class converter(object):
+class Converter(object):
 
     def __init__(self, phenotype_lib):
         self.phenotype_lib = phenotype_lib
@@ -13,8 +13,8 @@ class converter(object):
 
     def resolve_pheno(self, root, individual):
         self.individual = individual
-        self.input = pheno(0)
-        mother = pheno(1)
+        self.input = Pheno(0)
+        mother = Pheno(1)
         self.input.add_output(mother)
         mother.add_input(self.input)
         self.nodeLib.append(self.input)

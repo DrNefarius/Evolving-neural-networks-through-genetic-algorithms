@@ -9,7 +9,7 @@ class OperatorLib(object):
         self.operators = []
         self.populate()
 
-    def getOperators(self):
+    def get_operators(self):
         return self.operators
 
     def populate(self):

@@ -3,7 +3,7 @@ import queue
 from src import parameters
 
 
-class PhenoConvertor(object):
+class converter(object):
 
     def __init__(self, phenotype_lib):
         self.phenotype_lib = phenotype_lib

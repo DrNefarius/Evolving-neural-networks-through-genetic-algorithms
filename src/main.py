@@ -6,7 +6,7 @@ from deap import base
 from deap import creator
 from deap import tools
 from deap import gp
-from Individual import Individual
+from evolution.Individual import Individual
 from modelNN import ModelNN
 from operator import attrgetter
 import matplotlib.pyplot as plt
@@ -41,9 +41,9 @@ def evolve():
         print(individual)
         genotype = gp.compile(individual, pset)
         converter = Individual()
-        converter.setGenotype(genotype)
+        converter.set_genotype(genotype)
         print_genotype(individual, genotype)
-        result = converter.getPhenotype(individual)
+        result = converter.get_phenotype(individual)
         global noOfNet
         network = ModelNN(result, noOfNet)
         noOfNet += 1
@@ -230,8 +230,8 @@ def debug_individual(individual):
     pset.addTerminal('END')
     tree = gp.PrimitiveTree.from_string(individual, pset)
     genotype = gp.compile(tree, pset)
-    indi.setGenotype(genotype)
-    phenotype = indi.getPhenotype(individual)
+    indi.set_genotype(genotype)
+    phenotype = indi.get_phenotype(individual)
     network = ModelNN(phenotype, 9999)
     return network.test_acc, network.train_acc
 

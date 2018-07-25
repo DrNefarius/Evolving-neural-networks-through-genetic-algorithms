@@ -7,7 +7,7 @@ class converter(object):
 
     def __init__(self, phenotype_lib):
         self.phenotype_lib = phenotype_lib
-        self.gbIndex = 2
+        self.gbIndex = 1
         self.que = queue.Queue()
         self.nodeLib = []
 
@@ -40,13 +40,14 @@ class converter(object):
         operator = self.phenotype_lib[genotype_node.type]
         func = operator[0]
         arity = operator[1]
-        result = func(node, self.gbIndex)
         if arity == 2:
             self.gbIndex = self.gbIndex + 1
         # --- result [left, right]
         if arity == 1:
+            result = func(node)
             self.que.put([result, genotype_node.get_left()])
         if arity == 2:
+            result = func(node, self.gbIndex)
             self.que.put([result[0], genotype_node.get_left()])
             self.que.put([result[1], genotype_node.get_right()])
         return
@@ -73,7 +74,7 @@ class converter(object):
         outp = ''
         for o in node.outputs:
             inName = str(node.index) + '_' + str(node.neuron_count) + '_' + node.activation_function
-            outName = str(o.index) + '_' + str(o.neuron_count) + '_' + node.activation_function
+            outName = str(o.index) + '_' + str(o.neuron_count) + '_' + o.activation_function
             outp += '\"' + inName + '\"->\"' + outName + '\"' + '\n'
         return outp
 

@@ -1,7 +1,7 @@
 import operator
 import time
 import random
-from src import parameters
+from src import constants
 from deap import base
 from deap import creator
 from deap import tools
@@ -15,8 +15,8 @@ import queue
 
 
 def evolve():
-    print(str(parameters.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
-        parameters.POPULATION_SIZE) + ' Netzen pro Generation.')
+    print(str(constants.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
+        constants.POPULATION_SIZE) + ' Netzen pro Generation.')
 
     # global counter for network printing
     global noOfNet
@@ -60,16 +60,16 @@ def evolve():
     toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
     # decorate mate and mutate to prevent bloating
-    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=parameters.BLOAT_LIMIT))
-    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=parameters.BLOAT_LIMIT))
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=constants.BLOAT_LIMIT))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=constants.BLOAT_LIMIT))
 
     random.seed(42)  # the meaning of life
-    population = toolbox.population(n=parameters.POPULATION_SIZE)
+    population = toolbox.population(n=constants.POPULATION_SIZE)
 
     def log_pop(pop, c_index):
         pop.sort(key=attrgetter('fitness'), reverse=True)
         last_index = len(pop) - 1
-        factor = c_index / (parameters.NUMBER_OF_GENERATIONS * 1.0)
+        factor = c_index / (constants.NUMBER_OF_GENERATIONS * 1.0)
         completion_string = str(round(factor * 100, 2)) + "% abgeschlossen.\n"
         best_string = 'Bestes Individuum erreicht ' + str(pop[0].score) + '% Genauigkeit.'
         print(completion_string + best_string)
@@ -80,7 +80,7 @@ def evolve():
         total_score = 0
         for individual in pop:
             total_score += individual.score
-        average.append(total_score / parameters.POPULATION_SIZE)
+        average.append(total_score / constants.POPULATION_SIZE)
 
     # Data for graph
     worst = []
@@ -95,23 +95,23 @@ def evolve():
         ind.fitness.values = fit
 
     comp_index = 1
-    for gen in range(parameters.NUMBER_OF_GENERATIONS):
+    for gen in range(constants.NUMBER_OF_GENERATIONS):
         log_pop(population, comp_index)
         comp_index += 1
-        if gen != parameters.NUMBER_OF_GENERATIONS:
+        if gen != constants.NUMBER_OF_GENERATIONS:
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
 
             # Apply crossover on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                if random.random() < parameters.CROSSOVER_PROBABILITY:
+                if random.random() < constants.CROSSOVER_PROBABILITY:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
                     del child2.fitness.values
 
             # Apply mutation on the offspring
             for mutant in offspring:
-                if random.random() < parameters.MUTATION_PROBABILTY:
+                if random.random() < constants.MUTATION_PROBABILITY:
                     toolbox.mutate(mutant)
                     del mutant.fitness.values
 
@@ -127,7 +127,7 @@ def evolve():
 
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-            print(str(len(invalid_ind)) + " Individuen werden ausgewertet.")
+            print(str(len(invalid_ind)) + " ungültige Individuen werden neu ausgewertet.")
             fitness_list = toolbox.map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitness_list):
                 ind.fitness.values = fit
@@ -136,7 +136,7 @@ def evolve():
             population[:] = offspring
 
     # create graph
-    gene_arr = range(1, parameters.NUMBER_OF_GENERATIONS + 1)
+    gene_arr = range(1, constants.NUMBER_OF_GENERATIONS + 1)
     plt.plot(gene_arr, train_acc, 'bo-')
     plt.plot(gene_arr, test_acc, 'go-')
     b_patch = mpatches.Patch(color='blue', label='TRAIN')
@@ -144,7 +144,7 @@ def evolve():
     plt.legend(handles=[b_patch, g_patch])
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
-    plt.savefig(parameters.OUTPUT_TRAINTEST)
+    plt.savefig(constants.OUTPUT_TRAINTEST)
     plt.clf()
     plt.cla()
     plt.close()
@@ -157,7 +157,7 @@ def evolve():
     plt.legend(handles=[red_patch, blue_patch, green_patch])
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
-    plt.savefig(parameters.OUTPUT_GRAPH)
+    plt.savefig(constants.OUTPUT_GRAPH)
     return population
 
 
@@ -167,7 +167,7 @@ def print_genotype(indi, root):
     nodes = index_tree(root)
     for node in nodes:
         outp += get_ways(node)
-    file = open(parameters.OUTPUT_GENOTYPE_TREE, 'a')
+    file = open(constants.OUTPUT_GENOTYPE_TREE, 'a')
     file.write('\n\n' + str(indi) + '\n')
     if hasattr(indi, 'score'):
         file.write(str(indi.score) + '   ' + str(indi.height) + '\n')
@@ -262,7 +262,7 @@ def debug():
 
 if __name__ == "__main__":
     # TODO: integrate preprocessor
-    if parameters.DEBUG:
+    if constants.DEBUG:
         debug()
     else:
         main()

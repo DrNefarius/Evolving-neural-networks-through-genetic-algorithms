@@ -1,5 +1,5 @@
 from operators.operator_lib import OperatorLib
-from evolution.geno import Geno
+from evolution.genotype import Genotype
 from src.evolution.treeconverter import Converter
 
 
@@ -11,7 +11,7 @@ class Individual(object):
         self.register_operators()
 
         # --- Define Tree ---
-        root = Geno()
+        root = Genotype()
         self.root = root
 
     def register_operators(self):

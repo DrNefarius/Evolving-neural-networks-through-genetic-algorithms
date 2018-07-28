@@ -1,6 +1,6 @@
 from operators.operator import Operator
-from src.evolution.pheno import Pheno
-from src import parameters
+from src.evolution.phenotype import Phenotype
+from src import constants
 
 
 class OperatorLib(object):
@@ -18,7 +18,7 @@ class OperatorLib(object):
         self.addDOUB()
         self.addHALF()
 
-        if parameters.USE_CONVOLUTION_NN:
+        if constants.USE_CNN:
             self.addMAX_P()
             self.addDROP_20()
             self.addDROP_50()
@@ -41,7 +41,7 @@ class OperatorLib(object):
         operator = Operator('SEQ', 2)
 
         def func(node, index):
-            next = Pheno(index, node.neuron_count)
+            next = Phenotype(index, node.neuron_count)
             next.add_input(node)
             next.copy_outputs(node)
             for n in node.outputs:
@@ -57,7 +57,7 @@ class OperatorLib(object):
         operator = Operator('PAR', 2)
 
         def func(node, index):
-            next = Pheno(index, node.neuron_count)
+            next = Phenotype(index, node.neuron_count)
             next.copy_inputs(node)
             next.copy_outputs(node)
             return node, next  # return LEFT, RIGHT

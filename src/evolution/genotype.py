@@ -5,7 +5,7 @@ Unary operators only have a left descendant.
 '''
 
 
-class Geno(object):
+class Genotype(object):
 
     def __init__(self, type=None):
         if type is not None:

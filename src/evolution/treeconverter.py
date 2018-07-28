@@ -1,6 +1,6 @@
-from src.evolution.pheno import Pheno
+from src.evolution.phenotype import Phenotype
 import queue
-from src import parameters
+from src import constants
 
 
 class Converter(object):
@@ -13,8 +13,8 @@ class Converter(object):
 
     def resolve_pheno(self, root, individual):
         self.individual = individual
-        self.input = Pheno(0)
-        mother = Pheno(1)
+        self.input = Phenotype(0)
+        mother = Phenotype(1)
         self.input.add_output(mother)
         mother.add_input(self.input)
         self.nodeLib.append(self.input)
@@ -57,7 +57,7 @@ class Converter(object):
         outp += self.get_ways(self.nodeLib[0])
         for index in order:
             outp += self.get_ways(self.nodeLib[index])
-        file = open(parameters.OUTPUT_PHENOTYPE_TREE, 'a')
+        file = open(constants.OUTPUT_PHENOTYPE_TREE, 'a')
         file.write('\n\n' + str(ind) + '\n')
         file.write('digraph{\n')
         file.write(outp)

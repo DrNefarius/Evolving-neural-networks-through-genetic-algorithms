@@ -1,28 +1,28 @@
-from src import parameters
+from src import constants
 
 
-class Pheno(object):
+class Phenotype(object):
 
-    def __init__(self, index, neuroncount=parameters.NEURON_COUNT):
+    def __init__(self, index, neuroncount=constants.NEURON_COUNT):
         self.inputs = []
         self.outputs = []
         self.index = index
 
-        self.activation_function = parameters.ACTIVATION_FUNCTION
-        self.maxThreshold = parameters.MAX_NEURON_THRESHOLD
-        self.minThreshold = parameters.MIN_NEURON_THRESHOLD
-        self.layer_type = parameters.ACTIVATION_FUNCTION
-        if neuroncount < parameters.MIN_NEURON_THRESHOLD:
+        self.activation_function = constants.ACTIVATION_FUNCTION
+        self.maxThreshold = constants.MAX_NEURON_THRESHOLD
+        self.minThreshold = constants.MIN_NEURON_THRESHOLD
+        self.layer_type = constants.ACTIVATION_FUNCTION
+        if neuroncount < constants.MIN_NEURON_THRESHOLD:
             self.neuron_count = self.minThreshold
         else:
             self.neuron_count = neuroncount
 
-        if (parameters.USE_CONVOLUTION_NN):
-            self.dropout = parameters.DROUPOUT
+        if (constants.USE_CNN):
+            self.dropout = constants.DROPOUT
             self.maxPooling = True
-            self.filter_count = parameters.FILTER_COUNT
-            self.kernel_size = parameters.KERNEL_SIZE
-            self.pool_size = parameters.POOL_SIZE
+            self.filter_count = constants.FILTER_COUNT
+            self.kernel_size = constants.KERNEL_SIZE
+            self.pool_size = constants.POOL_SIZE
 
     def __eq__(self, other):
         return self.index == other.index
@@ -53,7 +53,7 @@ class Pheno(object):
 
     def divide_neuron_count(self, div):
         count = int(self.neuron_count / div)
-        if count < parameters.MIN_NEURON_THRESHOLD:
+        if count < constants.MIN_NEURON_THRESHOLD:
             self.neuron_count = self.minThreshold
         else:
             self.neuron_count = count

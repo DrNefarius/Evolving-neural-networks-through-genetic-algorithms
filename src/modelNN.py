@@ -49,21 +49,21 @@ class ModelNN(object):
                                           constants.INPUT_DIMENSION[1])
                 X_train = X_train.astype('float32')
                 X_train /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.OUTPUT_CLASS_COUNT)
+                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
                 X_test = X_test.reshape(10000, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
                                         constants.INPUT_DIMENSION[1])
                 X_test = X_test.astype('float32')
                 X_test /= 255
-                Y_test = np_utils.to_categorical(Y_test, constants.OUTPUT_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
             else:
                 X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
                 X_train = X_train.astype('float32')
                 X_train /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.OUTPUT_CLASS_COUNT)
+                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
                 X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
                 X_test = X_test.astype('float32')
                 X_test /= 255
-                Y_test = np_utils.to_categorical(Y_test, constants.OUTPUT_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
 
         if constants.DATASET == 'CIFAR':
             (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
@@ -83,8 +83,8 @@ class ModelNN(object):
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.OUTPUT_CLASS_COUNT)
-                Y_test = np_utils.to_categorical(Y_test, constants.OUTPUT_CLASS_COUNT)
+                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
             else:
                 X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
                 X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
@@ -92,8 +92,8 @@ class ModelNN(object):
                 X_test = X_test.astype('float32')
                 X_train /= 255
                 X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.OUTPUT_CLASS_COUNT)
-                Y_test = np_utils.to_categorical(Y_test, constants.OUTPUT_CLASS_COUNT)
+                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
+                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
 
         # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
         model_arr = [None] * len(pheno_arr)
@@ -190,11 +190,11 @@ class ModelNN(object):
         model.compile(loss=constants.LOSS_FUNCTION, optimizer=constants.OPTIMIZER, metrics=['accuracy'])
         model.fit(X_train, Y_train,
                   batch_size=constants.BATCH_SIZE,
-                  epochs=constants.LEARN_EPOCH_COUNT,
-                  verbose=constants.VERBOSE,
+                  epochs=constants.K_EPOCHS,
+                  verbose=constants.K_VERBOSE,
                   validation_data=(X_test, Y_test))
-        score = model.evaluate(X_test, Y_test, verbose=constants.VERBOSE)
+        score = model.evaluate(X_test, Y_test, verbose=constants.K_VERBOSE)
         testScore = score[1] * 100
-        score = model.evaluate(X_train, Y_train, verbose=constants.VERBOSE)
+        score = model.evaluate(X_train, Y_train, verbose=constants.K_VERBOSE)
         trainScore = score[1] * 100
         return trainScore, testScore, list_of_layers

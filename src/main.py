@@ -15,8 +15,8 @@ import queue
 
 
 def evolve():
-    print(str(constants.NUMBER_OF_GENERATIONS) + ' Generationen mit ' + str(
-        constants.POPULATION_SIZE) + ' Netzen pro Generation.')
+    print(str(constants.NGEN) + ' Generationen mit ' + str(
+        constants.POPS) + ' Netzen pro Generation.')
 
     # global counter for network printing
     global noOfNet
@@ -64,12 +64,12 @@ def evolve():
     toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=constants.BLOAT_LIMIT))
 
     random.seed(42)  # the meaning of life
-    population = toolbox.population(n=constants.POPULATION_SIZE)
+    population = toolbox.population(n=constants.POPS)
 
     def log_pop(pop, c_index):
         pop.sort(key=attrgetter('fitness'), reverse=True)
         last_index = len(pop) - 1
-        factor = c_index / (constants.NUMBER_OF_GENERATIONS * 1.0)
+        factor = c_index / (constants.NGEN * 1.0)
         completion_string = str(round(factor * 100, 2)) + "% abgeschlossen.\n"
         best_string = 'Bestes Individuum erreicht ' + str(pop[0].score) + '% Genauigkeit.'
         print(completion_string + best_string)
@@ -80,7 +80,7 @@ def evolve():
         total_score = 0
         for individual in pop:
             total_score += individual.score
-        average.append(total_score / constants.POPULATION_SIZE)
+        average.append(total_score / constants.POPS)
 
     # Data for graph
     worst = []
@@ -95,23 +95,23 @@ def evolve():
         ind.fitness.values = fit
 
     comp_index = 1
-    for gen in range(constants.NUMBER_OF_GENERATIONS):
+    for gen in range(constants.NGEN):
         log_pop(population, comp_index)
         comp_index += 1
-        if gen != constants.NUMBER_OF_GENERATIONS:
+        if gen != constants.NGEN:
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
 
             # Apply crossover on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                if random.random() < constants.CROSSOVER_PROBABILITY:
+                if random.random() < constants.CXPB:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
                     del child2.fitness.values
 
             # Apply mutation on the offspring
             for mutant in offspring:
-                if random.random() < constants.MUTATION_PROBABILITY:
+                if random.random() < constants.MUTPB:
                     toolbox.mutate(mutant)
                     del mutant.fitness.values
 
@@ -136,7 +136,7 @@ def evolve():
             population[:] = offspring
 
     # create graph
-    gene_arr = range(1, constants.NUMBER_OF_GENERATIONS + 1)
+    gene_arr = range(1, constants.NGEN + 1)
     plt.plot(gene_arr, train_acc, 'bo-')
     plt.plot(gene_arr, test_acc, 'go-')
     b_patch = mpatches.Patch(color='blue', label='TRAIN')
@@ -144,7 +144,7 @@ def evolve():
     plt.legend(handles=[b_patch, g_patch])
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
-    plt.savefig(constants.OUTPUT_TRAINTEST)
+    plt.savefig(constants.KERASGRAPH_PATH)
     plt.clf()
     plt.cla()
     plt.close()
@@ -157,7 +157,7 @@ def evolve():
     plt.legend(handles=[red_patch, blue_patch, green_patch])
     plt.ylabel('ACCURACY')
     plt.xlabel('GENERATION NUMBER')
-    plt.savefig(constants.OUTPUT_GRAPH)
+    plt.savefig(constants.GENGRAPH_PATH)
     return population
 
 
@@ -167,7 +167,7 @@ def print_genotype(indi, root):
     nodes = index_tree(root)
     for node in nodes:
         outp += get_ways(node)
-    file = open(constants.OUTPUT_GENOTYPE_TREE, 'a')
+    file = open(constants.GENOTYPE_PATH, 'a')
     file.write('\n\n' + str(indi) + '\n')
     if hasattr(indi, 'score'):
         file.write(str(indi.score) + '   ' + str(indi.height) + '\n')

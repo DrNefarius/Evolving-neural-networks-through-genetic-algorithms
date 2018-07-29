@@ -41,10 +41,10 @@ if DATASET == 'CIFAR':
     BATCH_SIZE = 128
 
 # -------------------- EVOLUTION PARAMETERS --------------------
-POPULATION_SIZE = 15
-NUMBER_OF_GENERATIONS = 15
-MUTATION_PROBABILITY = 0.1
-CROSSOVER_PROBABILITY = 0.5
+POPS = 15
+NGEN = 15
+MUTPB = 0.1
+CXPB = 0.5
 BLOAT_LIMIT = 17
 ELITISM_TUNE_UP = 0
 
@@ -64,18 +64,13 @@ ACTIVATION_FUNCTION_FOR_EXIT = 'softmax'
 OPTIMIZER = 'adam'
 LOSS_FUNCTION = 'categorical_crossentropy'
 
-LEARN_EPOCH_COUNT = 25
-OUTPUT_CLASS_COUNT = OUTPUT_DIMENSION
-VERBOSE = 0
+K_EPOCHS = 25
+K_CLASS_COUNT = OUTPUT_DIMENSION
+K_VERBOSE = 0  # 0 = silent || 1 = progress bar || 2 = show epoch
 
-# -------------------- OUTPUT FILES --------------------
-# OUTPUT = '' # for local pycharm run
-OUTPUT = "C:\\Users\\Tobias\\PycharmProjects\\dolezal\\src"  # for server run
+BASE_LINK = "C:\\Users\\Tobias\\PycharmProjects\\master\\src"
 
-OUTPUT_MUTATION_CHANGE = OUTPUT + '\\output\\mutchanges.txt'
-OUTPUT_ACCURACY = OUTPUT + '\\output\\accuracy.txt'
-OUTPUT_GENOTYPE_TREE = OUTPUT + '\\output\\Genotype.txt'
-OUTPUT_PHENOTYPE_TREE = OUTPUT + '\\output\\Phenotype.txt'
-OUTPUT_MODEL = OUTPUT + '\\output\\model_'
-OUTPUT_GRAPH = OUTPUT + '\\output\\graph.png'
-OUTPUT_TRAINTEST = OUTPUT + '\\output\\trainAndTest.png'
+GENOTYPE_PATH = BASE_LINK + '\\output\\Genotype.txt'
+PHENOTYPE_PATH = BASE_LINK + '\\output\\Phenotype.txt'
+GENGRAPH_PATH = BASE_LINK + '\\output\\gen.png'
+KERASGRAPH_PATH = BASE_LINK + '\\output\\keras.png'

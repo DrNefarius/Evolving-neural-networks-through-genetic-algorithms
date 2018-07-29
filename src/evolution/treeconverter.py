@@ -57,7 +57,7 @@ class Converter(object):
         outp += self.get_ways(self.nodeLib[0])
         for index in order:
             outp += self.get_ways(self.nodeLib[index])
-        file = open(constants.OUTPUT_PHENOTYPE_TREE, 'a')
+        file = open(constants.PHENOTYPE_PATH, 'a')
         file.write('\n\n' + str(ind) + '\n')
         file.write('digraph{\n')
         file.write(outp)

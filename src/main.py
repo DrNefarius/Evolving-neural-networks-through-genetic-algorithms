@@ -7,7 +7,7 @@ from deap import creator
 from deap import tools
 from deap import gp
 from evolution.Individual import Individual
-from modelNN import ModelNN
+from model_nn import ModelNN
 from operator import attrgetter
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches

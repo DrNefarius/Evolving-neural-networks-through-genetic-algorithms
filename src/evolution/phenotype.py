@@ -3,16 +3,16 @@ from src import constants
 
 class Phenotype(object):
 
-    def __init__(self, index, neuroncount=constants.NEURON_COUNT):
+    def __init__(self, index, neuroncount=constants.NEURONS):
         self.inputs = []
         self.outputs = []
         self.index = index
 
         self.activation_function = constants.ACTIVATION_FUNCTION
-        self.maxThreshold = constants.MAX_NEURON_THRESHOLD
-        self.minThreshold = constants.MIN_NEURON_THRESHOLD
+        self.maxThreshold = constants.MAX_NEURONS
+        self.minThreshold = constants.MIN_NEURONS
         self.layer_type = constants.ACTIVATION_FUNCTION
-        if neuroncount < constants.MIN_NEURON_THRESHOLD:
+        if neuroncount < constants.MIN_NEURONS:
             self.neuron_count = self.minThreshold
         else:
             self.neuron_count = neuroncount
@@ -53,7 +53,7 @@ class Phenotype(object):
 
     def divide_neuron_count(self, div):
         count = int(self.neuron_count / div)
-        if count < constants.MIN_NEURON_THRESHOLD:
+        if count < constants.MIN_NEURONS:
             self.neuron_count = self.minThreshold
         else:
             self.neuron_count = count

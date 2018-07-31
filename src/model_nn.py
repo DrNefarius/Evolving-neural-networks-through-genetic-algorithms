@@ -44,28 +44,7 @@ class ModelNN(object):
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
-            if constants.USE_CNN:
-                X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
-                                          constants.INPUT_DIMENSION[1])
-                X_train = X_train.astype('float32')
-                X_train /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
-                X_test = X_test.reshape(10000, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
-                                        constants.INPUT_DIMENSION[1])
-                X_test = X_test.astype('float32')
-                X_test /= 255
-                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
-            else:
-                X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
-                X_train = X_train.astype('float32')
-                X_train /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
-                X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
-                X_test = X_test.astype('float32')
-                X_test /= 255
-                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
-
-        if constants.DATASET == 'CIFAR':
+        elif constants.DATASET == 'CIFAR':
             (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
             if train_size < 50000:
                 sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=constants.OUTPUT_DIMENSION,
@@ -74,26 +53,21 @@ class ModelNN(object):
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
 
-            if constants.USE_CNN:
-                X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
-                                          constants.INPUT_DIMENSION[1])
-                X_test = X_test.reshape(10000, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
-                                        constants.INPUT_DIMENSION[1])
-                X_train = X_train.astype('float32')
-                X_test = X_test.astype('float32')
-                X_train /= 255
-                X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
-                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
-            else:
-                X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
-                X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
-                X_train = X_train.astype('float32')
-                X_test = X_test.astype('float32')
-                X_train /= 255
-                X_test /= 255
-                Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
-                Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
+        if constants.USE_CNN:
+            X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
+                                      constants.INPUT_DIMENSION[1])
+            X_test = X_test.reshape(10000, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
+                                    constants.INPUT_DIMENSION[1])
+        else:
+            X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
+            X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
+        X_train = X_train.astype('float32')
+        X_train /= 255
+        Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
+        X_test = X_test.astype('float32')
+        X_test /= 255
+        Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
+
 
         # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
         model_arr = [None] * len(pheno_arr)
@@ -173,21 +147,21 @@ class ModelNN(object):
             model.add(drawFlatten())
             BatchNormalization()(x)
             # model.add(drawBatchNormalization())
-            x = Dense(constants.MIN_NEURON_THRESHOLD, activation=constants.ACTIVATION_FUNCTION_FOR_EXIT)(x)
-            model.add(drawDense(constants.MIN_NEURON_THRESHOLD))
+            x = Dense(constants.MIN_NEURONS, activation=constants.K_ACTIVATION_FUNCTION_OUTPUT_LAYER)(x)
+            model.add(drawDense(constants.MIN_NEURONS))
             x = Dropout(0.5)(x)
             # model.add(Dropout(0.5))
-        output_layer = Dense(constants.OUTPUT_DIMENSION, activation=constants.ACTIVATION_FUNCTION_FOR_EXIT)(x)
+        output_layer = Dense(constants.OUTPUT_DIMENSION, activation=constants.K_ACTIVATION_FUNCTION_OUTPUT_LAYER)(x)
         if constants.USE_CNN:
             model.add(drawDense(constants.OUTPUT_DIMENSION))
             save_model_to_file(model, "CNN" + str(no_of_net) + ".pdf")
         else:
-            list_of_layers.append((round(constants.OUTPUT_DIMENSION), constants.ACTIVATION_FUNCTION_FOR_EXIT))
+            list_of_layers.append((round(constants.OUTPUT_DIMENSION), constants.K_ACTIVATION_FUNCTION_OUTPUT_LAYER))
             # TODO: only draw best of each generation in a file
             # plotNN.DrawNN(list_of_layers).draw()
 
         model = Model(inputs=input_layer, outputs=output_layer)
-        model.compile(loss=constants.LOSS_FUNCTION, optimizer=constants.OPTIMIZER, metrics=['accuracy'])
+        model.compile(loss=constants.K_LOSS, optimizer=constants.K_OPTIMIZER, metrics=['accuracy'])
         model.fit(X_train, Y_train,
                   batch_size=constants.BATCH_SIZE,
                   epochs=constants.K_EPOCHS,

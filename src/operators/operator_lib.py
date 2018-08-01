@@ -50,7 +50,7 @@ class OperatorLib(object):
             node.add_output(next)
             return node, next  # return LEFT, RIGHT
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addPAR(self):
@@ -62,7 +62,7 @@ class OperatorLib(object):
             next.copy_outputs(node)
             return node, next  # return LEFT, RIGHT
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addDOUB(self):
@@ -72,7 +72,7 @@ class OperatorLib(object):
             node.multiply_neuron_count(2)
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addHALF(self):
@@ -82,7 +82,7 @@ class OperatorLib(object):
             node.divide_neuron_count(2)
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     # Convolutional operators
@@ -94,7 +94,7 @@ class OperatorLib(object):
             node.maxPooling = True
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addDROP_20(self):
@@ -104,7 +104,7 @@ class OperatorLib(object):
             node.dropout = 0.2
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addDROP_50(self):
@@ -114,7 +114,7 @@ class OperatorLib(object):
             node.dropout = 0.5
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addDOUB_F(self):
@@ -124,7 +124,7 @@ class OperatorLib(object):
             node.filter_count *= 2
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addKER_S(self):
@@ -134,7 +134,7 @@ class OperatorLib(object):
             node.kernel_size += 1
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addPOOL_S(self):
@@ -144,7 +144,7 @@ class OperatorLib(object):
             node.pool_size += 1
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     # activation function operators for
@@ -156,7 +156,7 @@ class OperatorLib(object):
             node.set_activation('softmax')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addELU(self):
@@ -166,7 +166,7 @@ class OperatorLib(object):
             node.set_activation('elu')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addSOFTPLUS(self):
@@ -176,7 +176,7 @@ class OperatorLib(object):
             node.set_activation('softplus')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addSOFTSIGN(self):
@@ -186,7 +186,7 @@ class OperatorLib(object):
             node.set_activation('softsign')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addRELU(self):
@@ -196,7 +196,7 @@ class OperatorLib(object):
             node.set_activation('relu')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addTANH(self):
@@ -206,7 +206,7 @@ class OperatorLib(object):
             node.set_activation('tanh')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addSIGMOID(self):
@@ -216,7 +216,7 @@ class OperatorLib(object):
             node.set_activation('sigmoid')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     def addHSIGMOID(self):
@@ -226,7 +226,7 @@ class OperatorLib(object):
             node.set_activation('hard_sigmoid')
             return node
 
-        operator.setPhenoFunc(func)
+        operator.set_pheno_func(func)
         self.operators.append(operator)
 
     # generic getter

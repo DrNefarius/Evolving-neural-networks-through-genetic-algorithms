@@ -5,19 +5,19 @@ class Operator(object):
     def __init__(self, name, arity):
         self.name = name
         self.arity = arity
-        self.func = self.setFunction(arity)
+        self.func = self.set_function(arity)
         self.phenofunction = None
 
-    def setFunction(self, arity):
+    def set_function(self, arity):
         if arity == 1:
             return self.unary
         elif arity == 2:
             return self.binary
         else:
             raise ValueError(
-                "Stelligkeitswert für Operatorfunktion nicht unterstützt (ist höher als 2 oder niedriger als 1)")
+                "Stelligkeit für Operatorfunktion nicht unterstützt (ist höher als 2 oder niedriger als 1)")
 
-    def setPhenoFunc(self, function):
+    def set_pheno_func(self, function):
         self.phenofunction = function
 
     def unary(self, first):

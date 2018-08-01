@@ -73,9 +73,9 @@ class Converter(object):
     def get_ways(self, node):
         outp = ''
         for o in node.outputs:
-            inName = str(node.index) + '_' + str(node.neuron_count) + '_' + node.activation_function
-            outName = str(o.index) + '_' + str(o.neuron_count) + '_' + o.activation_function
-            outp += '\"' + inName + '\"->\"' + outName + '\"' + '\n'
+            inName = 'l' + str(node.index) + '_' + str(node.neuron_count) + 'n_' + node.activation_function
+            outName = 'l' + str(o.index) + '_' + str(o.neuron_count) + 'n_' + o.activation_function
+            outp += inName + ' -> ' + outName + '\n'
         return outp
 
     def get_order_bfs(self, node):

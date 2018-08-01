@@ -1,12 +1,14 @@
 import operator
 import time
 import random
+
+from evolution.converter import Converter
+from operators.operator_lib import OperatorLib
 from src import constants
 from deap import base
 from deap import creator
 from deap import tools
 from deap import gp
-from evolution.Individual import Individual
 from model_nn import ModelNN
 from operator import attrgetter
 import matplotlib.pyplot as plt
@@ -23,9 +25,17 @@ def evolve():
     noOfNet = 0
 
     pset = gp.PrimitiveSet("main", 0)
-    primitives = Individual()
-    for key, value in primitives.functions.items():  # getting all primitives from
-        pset.addPrimitive(value[0], value[1], value[2])
+
+
+    # primitives = Individual()
+    # for key, value in primitives.functions.items():  # getting all primitives from
+    #     pset.addPrimitive(value[0], value[1], value[2])
+
+    primitives = OperatorLib().get_operators()
+    for primitive in primitives:
+        pset.addPrimitive(primitive.func, primitive.arity, primitive.name)
+
+
     pset.addTerminal('END')
 
     creator.create("FitnessMin", base.Fitness, weights=(1.0,))
@@ -40,12 +50,16 @@ def evolve():
     def evaluate(individual):
         print(individual)
         genotype = gp.compile(individual, pset)
-        converter = Individual()
-        converter.set_genotype(genotype)
-        print_genotype(individual, genotype)
-        result = converter.get_phenotype(individual)
+
+        functions = {}
+        operators = OperatorLib().get_operators()
+        for op in operators:
+            functions[op.name] = (op.phenofunction, op.arity)
+        converter = Converter(functions)
+        phenotype = converter.resolve_pheno(genotype, individual)
+
         global noOfNet
-        network = ModelNN(result, noOfNet)
+        network = ModelNN(phenotype, noOfNet)
         noOfNet += 1
         print(network.test_acc)
         individual.score = network.test_acc
@@ -224,14 +238,18 @@ def get_offset(count):
 
 def debug_individual(individual):
     pset = gp.PrimitiveSet('main', 0)
-    indi = Individual()
-    for key, value in indi.functions.items():
-        pset.addPrimitive(value[0], value[1], value[2])
+    primitives = OperatorLib().get_operators()
+    for primitive in primitives:
+        pset.addPrimitive(primitive.func, primitive.arity, primitive.name)
     pset.addTerminal('END')
     tree = gp.PrimitiveTree.from_string(individual, pset)
     genotype = gp.compile(tree, pset)
-    indi.set_genotype(genotype)
-    phenotype = indi.get_phenotype(individual)
+    functions = {}
+    operators = OperatorLib().get_operators()
+    for op in operators:
+        functions[op.name] = (op.phenofunction, op.arity)
+    converter = Converter(functions)
+    phenotype = converter.resolve_pheno(genotype, individual)
     network = ModelNN(phenotype, 9999)
     return network.test_acc, network.train_acc
 

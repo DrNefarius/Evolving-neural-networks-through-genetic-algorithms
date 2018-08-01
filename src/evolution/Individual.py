@@ -1,6 +1,6 @@
 from operators.operator_lib import OperatorLib
 from evolution.genotype import Genotype
-from src.evolution.treeconverter import Converter
+from src.evolution.converter import Converter
 
 
 class Individual(object):

@@ -26,7 +26,7 @@ OUTPUT_DIMENSION = 10
 BATCH_SIZE = 128
 
 POPS = 15  # Number of Populations
-NGEN = 15  # Number of Generations
+NGEN = 1  # Number of Generations
 MUTPB = 0.1  # Probability of Mutation
 CXPB = 0.5  # Probability of Crossover
 BLOAT_LIMIT = 17

@@ -26,15 +26,9 @@ def evolve():
 
     pset = gp.PrimitiveSet("main", 0)
 
-
-    # primitives = Individual()
-    # for key, value in primitives.functions.items():  # getting all primitives from
-    #     pset.addPrimitive(value[0], value[1], value[2])
-
     primitives = OperatorLib().get_operators()
     for primitive in primitives:
         pset.addPrimitive(primitive.func, primitive.arity, primitive.name)
-
 
     pset.addTerminal('END')
 
@@ -256,17 +250,14 @@ def debug_individual(individual):
 
 def main():
     start = time.time()
-    results = evolve()
+    last_generation = evolve()
     end = time.time()
     print('Benötigte Zeit: '),
-    print(end - start),
-    print(' Sekunden.')
-    print('Letzte Generation: ')
-    if len(results) > 0:
-        for i in results:
-            print(i.score / 100),
-            print('   ----    '),
-            print(i)
+    print(str(end - start) + ' Sekunden.'),
+    print('Siehe ' + constants.GENGRAPH_PATH + ' für eine detaillierte Auswertung aller Generationen.')
+    print('Letzte Generation:')
+    for ind in last_generation:
+        print(ind)
 
 
 def debug():

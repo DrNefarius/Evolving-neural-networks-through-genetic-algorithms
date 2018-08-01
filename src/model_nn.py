@@ -29,7 +29,7 @@ class ModelNN(object):
         self.train_acc = temp[0]
 
     def create_model(self, pheno, no_of_net):
-        pheno_arr = pheno[0]
+        phenotypes = pheno[0]
         order = pheno[1]
 
         seed = 42
@@ -70,15 +70,15 @@ class ModelNN(object):
 
 
         # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
-        model_arr = [None] * len(pheno_arr)
+        layers = [None] * len(phenotypes)
         list_of_layers = []
         if constants.USE_CNN:
-            model_arr[0] = (Input(
+            layers[0] = (Input(
                 shape=(constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[1])))
             model = drawModel(input_shape=(
                 constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[1]))
         else:
-            model_arr[0] = (Input(shape=(constants.INPUT_DIMENSION,)))
+            layers[0] = (Input(shape=(constants.INPUT_DIMENSION,)))
             list_of_layers.append((round(constants.INPUT_DIMENSION / 100), 'relu'))
         output_layers = []
 
@@ -86,12 +86,12 @@ class ModelNN(object):
         while len(order) > 0:
             index = index % len(order)
             order_index = order[index]
-            layer = pheno_arr[order_index]  # iterate through Phenotype nodes
+            layer = phenotypes[order_index]  # iterate through Phenotype nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
             is_ready = True
             for inp in layer.inputs:
-                if model_arr[inp.index] is None:
+                if layers[inp.index] is None:
                     is_ready = False
                     break
 
@@ -99,21 +99,21 @@ class ModelNN(object):
                 if len(layer.inputs) > 1:
                     layers_to_concatenate = []
                     for inp in layer.inputs:
-                        layers_to_concatenate.append(model_arr[inp.index])
+                        layers_to_concatenate.append(layers[inp.index])
                     x = keras.layers.concatenate(layers_to_concatenate)
                 else:
                     for inp in layer.inputs:
-                        x = (model_arr[inp.index])
+                        x = (layers[inp.index])
                         # for layers with only one input create new layer and use the layer
                 if not constants.USE_CNN:
-                    model_arr[order_index] = Dense(layer.neuron_count, activation=layer.activation_function)(x)
+                    layers[order_index] = Dense(layer.neuron_count, activation=layer.activation_function)(x)
                     list_of_layers.append((round(layer.neuron_count / 100), layer.activation_function))
                 else:
                     im_dim = constants.IMG_DIMENSION
                     kernel_size = layer.kernel_size if layer.kernel_size < im_dim else im_dim
                     pool_size = layer.pool_size if layer.pool_size < im_dim else im_dim
                     dropout = layer.dropout
-                    x = model_arr[inp.index]
+                    x = layers[inp.index]
                     x = Conv2D(filters=layer.filter_count, kernel_size=kernel_size,
                                strides=1, padding='same', activation=layer.activation_function)(x)
                     model.add(drawConv2D(filters=layer.filter_count, kernel_size=(kernel_size, kernel_size),
@@ -127,17 +127,17 @@ class ModelNN(object):
                     if layer.dropout > 0:
                         Dropout(dropout)(x)
                         # model.add(drawDropout(dropout))
-                    model_arr[order_index] = x
+                    layers[order_index] = x
 
                 if len(layer.outputs) == 0:  # mark all ouput layers
-                    output_layers.append(model_arr[order_index])
+                    output_layers.append(layers[order_index])
                 order.remove(order_index)
                 index = 0
             else:
                 index += 1
                 # -----
         # ----------- CREATE NETWORK -----------
-        input_layer = model_arr[0]
+        input_layer = layers[0]
         if len(output_layers) > 1:
             x = keras.layers.concatenate(output_layers)
         else:
@@ -168,7 +168,7 @@ class ModelNN(object):
                   verbose=constants.K_VERBOSE,
                   validation_data=(X_test, Y_test))
         score = model.evaluate(X_test, Y_test, verbose=constants.K_VERBOSE)
-        testScore = score[1] * 100
+        test_score = score[1] * 100
         score = model.evaluate(X_train, Y_train, verbose=constants.K_VERBOSE)
-        trainScore = score[1] * 100
-        return trainScore, testScore, list_of_layers
+        train_score = score[1] * 100
+        return train_score, test_score, list_of_layers

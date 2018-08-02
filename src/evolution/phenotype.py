@@ -19,7 +19,7 @@ class Phenotype(object):
 
         if (constants.USE_CNN):
             self.dropout = constants.DROPOUT
-            self.maxPooling = True
+            self.maxPooling = False
             self.filter_count = constants.FILTER_COUNT
             self.kernel_size = constants.KERNEL_SIZE
             self.pool_size = constants.POOL_SIZE

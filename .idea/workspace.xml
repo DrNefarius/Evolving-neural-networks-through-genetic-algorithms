@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="48caaa3b-9541-4378-9381-3864b1106e44" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/evolution/phenotype.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evolution/phenotype.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_nn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/operator_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/operator_lib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+            <state relative-caret-position="851">
+              <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -28,21 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="keras.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/output/keras.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file leaf-file-name="gen.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/output/gen.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file leaf-file-name="phenotype.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="phenotype.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/evolution/phenotype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="24" column="26" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="26" />
+            <state relative-caret-position="530">
+              <caret line="35" column="37" lean-forward="true" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -50,8 +41,8 @@
       <file leaf-file-name="operator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/operator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="26" />
+            <state relative-caret-position="357">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -59,8 +50,8 @@
       <file leaf-file-name="operator_lib.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/operator_lib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+            <state relative-caret-position="408">
+              <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -68,8 +59,8 @@
       <file leaf-file-name="model_nn.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model_nn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="172" column="19" selection-start-line="172" selection-start-column="19" selection-end-line="172" selection-end-column="19" />
+            <state relative-caret-position="323">
+              <caret line="156" column="14" selection-start-line="156" selection-start-column="14" selection-end-line="156" selection-end-column="14" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -80,26 +71,8 @@
       <file leaf-file-name="constants.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/constants.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="genotype.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/evolution/genotype.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="converter.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/evolution/converter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="17">
+              <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -186,28 +159,28 @@
         <option value="$PROJECT_DIR$/src/operators/operatorLib.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Individual.py" />
-        <option value="$PROJECT_DIR$/src/operators/operator_lib.py" />
         <option value="$PROJECT_DIR$/src/evolution/Individual.py" />
         <option value="$PROJECT_DIR$/src/evolution/pheno.py" />
         <option value="$PROJECT_DIR$/src/evolution/geno.py" />
         <option value="$PROJECT_DIR$/src/evolution/genotype.py" />
-        <option value="$PROJECT_DIR$/src/evolution/phenotype.py" />
         <option value="$PROJECT_DIR$/src/output/Phenotype.txt" />
         <option value="$PROJECT_DIR$/src/output/Genotype.txt" />
         <option value="$PROJECT_DIR$/src/modelNN.py" />
         <option value="$PROJECT_DIR$/src/operators/operator.py" />
         <option value="$PROJECT_DIR$/src/evolution/treeconverter.py" />
+        <option value="$PROJECT_DIR$/src/evolution/phenotype.py" />
+        <option value="$PROJECT_DIR$/src/operators/operator_lib.py" />
         <option value="$PROJECT_DIR$/src/model_nn.py" />
-        <option value="$PROJECT_DIR$/src/constants.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/src/constants.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1723" />
-    <option name="y" value="274" />
+    <option name="x" value="1971" />
+    <option name="y" value="178" />
     <option name="width" value="1905" />
-    <option name="height" value="1644" />
+    <option name="height" value="1895" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -386,18 +359,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1149" y="183" width="1270" height="1096" extended-state="0" />
+    <frame x="1314" y="119" width="1270" height="1263" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2595296" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2595296" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.497006" weight="0.32855567" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.4339172" side_tool="true" weight="0.3221154" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.459854" weight="0.3244397" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.61800486" visible="true" weight="0.34685165" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.61232764" visible="true" weight="0.29438406" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.48499593" weight="0.28495198" />
       <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49881798" weight="0.32882166" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.38199514" side_tool="true" visible="true" weight="0.34685165" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.38767233" side_tool="true" visible="true" weight="0.29438406" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7080292" weight="0.3959445" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -407,25 +379,26 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.459854" weight="0.3244397" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49920383" weight="0.32932693" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49840763" weight="0.32932693" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49920383" weight="0.32932693" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.72850317" visible="true" weight="0.39903846" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49840763" weight="0.32932693" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.2714968" side_tool="true" visible="true" weight="0.39903846" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49840763" weight="0.32932693" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.49920383" weight="0.32932693" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -650,12 +623,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/mutchanges.txt" />
-    <entry file="file://$PROJECT_DIR$/src/output/graph_6k_mnist_15_15_100nstart_25epoch.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_6k_mnist_15_15_100nstart_25epoch.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/output/accuracy.txt" />
     <entry file="file://$PROJECT_DIR$/src/output/Genotype.txt">
       <provider selected="true" editor-type-id="text-editor" />
@@ -688,78 +655,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/phenotype.py">
+    <entry file="file://$PROJECT_DIR$/src/evolution/Individual.py" />
+    <entry file="file://$PROJECT_DIR$/src/evolution/converter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="374">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolution/genotype.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/operator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/operator_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/Individual.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/converter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="357">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model_nn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="172" column="19" selection-start-line="172" selection-start-column="19" selection-end-line="172" selection-end-column="19" />
+        <state relative-caret-position="323">
+          <caret line="156" column="14" selection-start-line="156" selection-start-column="14" selection-end-line="156" selection-end-column="14" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evolution/genotype.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/output/keras.png">
+    <entry file="file://$PROJECT_DIR$/src/output/graph_6k_mnist_15_15_100nstart_25epoch.png">
       <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/output/trainAndTest_6k_mnist_15_15_100nstart_25epoch.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/operator_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="851">
+          <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/output/gen.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
+    <entry file="file://$PROJECT_DIR$/src/output/keras.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/evolution/phenotype.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="530">
+          <caret line="35" column="37" lean-forward="true" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
         </state>
       </provider>
     </entry>

@@ -154,7 +154,7 @@ class ModelNN(object):
         output_layer = Dense(constants.OUTPUT_DIMENSION, activation=constants.K_ACTIVATION_FUNCTION_OUTPUT_LAYER)(x)
         if constants.USE_CNN:
             model.add(drawDense(constants.OUTPUT_DIMENSION))
-            save_model_to_file(model, "CNN" + str(no_of_net) + ".pdf")
+            # save_model_to_file(model, "CNN" + str(no_of_net) + ".pdf")
         else:
             list_of_layers.append((round(constants.OUTPUT_DIMENSION), constants.K_ACTIVATION_FUNCTION_OUTPUT_LAYER))
             # TODO: only draw best of each generation in a file

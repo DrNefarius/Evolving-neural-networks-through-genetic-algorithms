@@ -20,11 +20,14 @@ class OperatorLib(object):
 
         if constants.USE_CNN:
             self.addMAX_P()
-            self.addDROP_20()
-            self.addDROP_50()
-            self.addDOUB_F()
-            self.addKER_S()
-            self.addPOOL_S()
+            self.addDROP_DEC()
+            self.addDROP_INC()
+            self.addFILTER_DEC()
+            self.addFILTER_INC()
+            self.addKER_SIZE_DEC()
+            self.addKER_SIZE_INC()
+            self.addPOOL_SIZE_DEC()
+            self.addPOOL_SIZE_INC()
         else:
             self.addSOFTMAX()
             self.addELU()
@@ -97,28 +100,30 @@ class OperatorLib(object):
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    def addDROP_20(self):
-        operator = Operator('DROP_20', 1)
+    def addDROP_DEC(self):
+        operator = Operator('DROP_DEC', 1)
 
         def func(node):
-            node.dropout = 0.2
+            if node.dropout > 0.1:  # make sure that it never reaches 0%
+                node.dropout -= 0.1
             return node
 
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    def addDROP_50(self):
-        operator = Operator('DROP_50', 1)
+    def addDROP_INC(self):
+        operator = Operator('DROP_INC', 1)
 
         def func(node):
-            node.dropout = 0.5
+            if node.dropout < 0.9:  # make sure that it never reaches 100%
+                node.dropout += 0.1
             return node
 
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    def addDOUB_F(self):
-        operator = Operator('DOUB_F', 1)
+    def addFILTER_INC(self):
+        operator = Operator('FILTER_INC', 1)
 
         def func(node):
             node.filter_count *= 2
@@ -127,21 +132,54 @@ class OperatorLib(object):
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    def addKER_S(self):
-        operator = Operator('KER_S', 1)
+    def addFILTER_DEC(self):
+        operator = Operator('FILTER_DEC', 1)
 
         def func(node):
-            node.kernel_size += 1
+            if node.filter_count > constants.FILTER_COUNT:  # make sure that it stays at least FILTER_COUNT
+                node.filter_count = int(node.filter_count / 2)
             return node
 
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    def addPOOL_S(self):
-        operator = Operator('POOL_S', 1)
+    def addKER_SIZE_INC(self):
+        operator = Operator('KER_SIZE_INC', 1)
+
+        def func(node):
+            node.kernel_size += 2  # make sure kernel always stays uneven (e.g. 3, 5, 7 etc.) for convolution to work
+            return node
+
+        operator.set_pheno_func(func)
+        self.operators.append(operator)
+
+    def addKER_SIZE_DEC(self):
+        operator = Operator('KER_SIZE_DEC', 1)
+
+        def func(node):
+            if node.kernel_size > constants.KERNEL_SIZE:  # make sure kernel stays at least KERNEL_SIZE
+                node.kernel_size -= 2  # make sure it always stays uneven (e.g. 3, 5, 7 etc.) for convolution to work
+            return node
+
+        operator.set_pheno_func(func)
+        self.operators.append(operator)
+
+    def addPOOL_SIZE_INC(self):
+        operator = Operator('POOL_SIZE_INC', 1)
 
         def func(node):
             node.pool_size += 1
+            return node
+
+        operator.set_pheno_func(func)
+        self.operators.append(operator)
+
+    def addPOOL_SIZE_DEC(self):
+        operator = Operator('POOL_SIZE_DEC', 1)
+
+        def func(node):
+            if node.pool_size > constants.POOL_SIZE:  # make sure it always stays at least POOL_SIZE
+                node.pool_size -= 1
             return node
 
         operator.set_pheno_func(func)

@@ -97,15 +97,8 @@ def evolve():
     train_acc = []
     test_acc = []
 
-    # Evaluate the entire generation
-    fitness_list = map(toolbox.evaluate, population)
-    for ind, fit in zip(population, fitness_list):
-        ind.fitness.values = fit
-
     comp_index = 1
     for gen in range(constants.NGEN):
-        log_pop(population, comp_index)
-        comp_index += 1
         if gen != constants.NGEN:
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
@@ -142,6 +135,9 @@ def evolve():
 
             # The population is entirely replaced by the offspring
             population[:] = offspring
+
+            log_pop(population, comp_index)
+            comp_index += 1
 
     # create graph
     gene_arr = range(1, constants.NGEN + 1)

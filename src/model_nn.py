@@ -68,9 +68,7 @@ class ModelNN(object):
         X_test /= 255
         Y_test = np_utils.to_categorical(Y_test, constants.K_CLASS_COUNT)
 
-
-        # ----------- PREPARE NETWORK ----------------------------------------------------------------------------------
-        layers = [None] * len(phenotypes)
+        layers = [None] * len(phenotypes)  # preinit necessary cause of direct access based on order
         list_of_layers = []
         if constants.USE_CNN:
             layers[0] = (Input(
@@ -82,61 +80,42 @@ class ModelNN(object):
             list_of_layers.append((round(constants.INPUT_DIMENSION / 100), 'relu'))
         output_layers = []
 
-        index = 0
         while len(order) > 0:
-            index = index % len(order)
-            order_index = order[index]
+            order_index = order[0]  # always use the first element
             layer = phenotypes[order_index]  # iterate through Phenotype nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
-            is_ready = True
-            for inp in layer.inputs:
-                if layers[inp.index] is None:
-                    is_ready = False
-                    break
-
-            if is_ready:
-                if len(layer.inputs) > 1:
-                    layers_to_concatenate = []
-                    for inp in layer.inputs:
-                        layers_to_concatenate.append(layers[inp.index])
-                    x = keras.layers.concatenate(layers_to_concatenate)
-                else:
-                    for inp in layer.inputs:
-                        x = (layers[inp.index])
-                        # for layers with only one input create new layer and use the layer
-                if not constants.USE_CNN:
-                    layers[order_index] = Dense(layer.neuron_count, activation=layer.activation_function)(x)
-                    list_of_layers.append((round(layer.neuron_count / 100), layer.activation_function))
-                else:
-                    im_dim = constants.IMG_DIMENSION
-                    kernel_size = layer.kernel_size if layer.kernel_size < im_dim else im_dim
-                    pool_size = layer.pool_size if layer.pool_size < im_dim else im_dim
-                    dropout = layer.dropout
-                    x = layers[inp.index]
-                    x = Conv2D(filters=layer.filter_count, kernel_size=kernel_size,
-                               strides=1, padding='same', activation=layer.activation_function)(x)
-                    model.add(drawConv2D(filters=layer.filter_count, kernel_size=(kernel_size, kernel_size),
-                                         strides=(1, 1), padding='same'))
-                    if layer.maxPooling:
-                        x = MaxPooling2D(pool_size=(pool_size, pool_size),
-                                         strides=1, padding='same')(x)
-                        model.add(drawMaxPooling2D(pool_size=(pool_size, pool_size),
-                                                   strides=(1, 1), padding='same'))
-
-                    if layer.dropout > 0:
-                        Dropout(dropout)(x)
-                        # model.add(drawDropout(dropout))
-                    layers[order_index] = x
-
-                if len(layer.outputs) == 0:  # mark all ouput layers
-                    output_layers.append(layers[order_index])
-                order.remove(order_index)
-                index = 0
+            if len(layer.inputs) > 1:
+                concatenation = []
+                for inp in layer.inputs:
+                    concatenation.append(layers[inp.index])
+                x = keras.layers.concatenate(concatenation)
             else:
-                index += 1
-                # -----
-        # ----------- CREATE NETWORK -----------
+                for inp in layer.inputs:
+                    # for layers with only one input create new layer and use the layer
+                    x = (layers[inp.index])
+            if not constants.USE_CNN:
+                layers[order_index] = Dense(layer.neurons, activation=layer.activation_function)(x)
+                list_of_layers.append((round(layer.neurons / 100), layer.activation_function))
+            else:
+                x = Conv2D(filters=layer.filter_count, kernel_size=layer.kernel_size,
+                           strides=(1, 1), padding='same', activation=layer.activation_function)(x)
+                model.add(drawConv2D(filters=layer.filter_count, kernel_size=(layer.kernel_size, layer.kernel_size),
+                                     strides=(1, 1), padding='same'))
+                if layer.maxPooling:
+                    x = MaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
+                                     strides=(1, 1), padding='same')(x)
+                    model.add(drawMaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
+                                               strides=(1, 1), padding='same'))
+
+                Dropout(layer.dropout)(x)
+                # model.add(drawDropout(layer.dropout))
+                layers[order_index] = x
+
+            if len(layer.outputs) == 0:  # mark all output layers
+                output_layers.append(layers[order_index])
+            order.remove(order_index)
+
         input_layer = layers[0]
         if len(output_layers) > 1:
             x = keras.layers.concatenate(output_layers)

@@ -3,26 +3,25 @@ from src import constants
 
 class Phenotype(object):
 
-    def __init__(self, index, neuroncount=constants.NEURONS):
+    def __init__(self, index, neurons=constants.MIN_NEURONS):
         self.inputs = []
         self.outputs = []
         self.index = index
 
         self.activation_function = constants.ACTIVATION_FUNCTION
-        self.maxThreshold = constants.MAX_NEURONS
-        self.minThreshold = constants.MIN_NEURONS
-        self.layer_type = constants.ACTIVATION_FUNCTION
-        if neuroncount < constants.MIN_NEURONS:
-            self.neuron_count = self.minThreshold
+        self.max_threshold = constants.MAX_NEURONS
+        self.min_threshold = constants.MIN_NEURONS
+        if neurons < constants.MIN_NEURONS:
+            self.neurons = self.min_threshold
         else:
-            self.neuron_count = neuroncount
+            self.neurons = neurons
 
-        if (constants.USE_CNN):
-            self.dropout = constants.DROPOUT
+        if constants.USE_CNN:
+            self.dropout = constants.DROPOUT_START
             self.maxPooling = False
-            self.filter_count = constants.FILTER_COUNT
-            self.kernel_size = constants.KERNEL_SIZE
-            self.pool_size = constants.POOL_SIZE
+            self.filter_count = constants.FILTER_COUNT_MIN
+            self.kernel_size = constants.KERNEL_SIZE_MIN
+            self.pool_size = constants.POOL_SIZE_MIN
 
     def __eq__(self, other):
         return self.index == other.index
@@ -45,18 +44,18 @@ class Phenotype(object):
         self.inputs.append(new)
 
     def multiply_neuron_count(self, multi):
-        count = self.neuron_count * multi
-        if count < self.maxThreshold:
-            self.neuron_count = count
+        count = self.neurons * multi
+        if count < self.max_threshold:
+            self.neurons = count
         else:
-            self.neuron_count = self.maxThreshold
+            self.neurons = self.max_threshold
 
     def divide_neuron_count(self, div):
-        count = int(self.neuron_count / div)
+        count = int(self.neurons / div)
         if count < constants.MIN_NEURONS:
-            self.neuron_count = self.minThreshold
+            self.neurons = self.min_threshold
         else:
-            self.neuron_count = count
+            self.neurons = count
 
     def set_activation(self, activation):
         self.activation_function = activation

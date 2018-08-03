@@ -44,7 +44,7 @@ class OperatorLib(object):
         operator = Operator('SEQ', 2)
 
         def func(node, index):
-            next = Phenotype(index, node.neuron_count)
+            next = Phenotype(index, node.neurons)
             next.add_input(node)
             next.copy_outputs(node)
             for n in node.outputs:
@@ -60,7 +60,7 @@ class OperatorLib(object):
         operator = Operator('PAR', 2)
 
         def func(node, index):
-            next = Phenotype(index, node.neuron_count)
+            next = Phenotype(index, node.neurons)
             next.copy_inputs(node)
             next.copy_outputs(node)
             return node, next  # return LEFT, RIGHT
@@ -136,7 +136,7 @@ class OperatorLib(object):
         operator = Operator('FILTER_DEC', 1)
 
         def func(node):
-            if node.filter_count > constants.FILTER_COUNT:  # make sure that it stays at least FILTER_COUNT
+            if node.filter_count > constants.FILTER_COUNT_MIN:  # make sure that it stays at least FILTER_COUNT_MIN
                 node.filter_count = int(node.filter_count / 2)
             return node
 
@@ -147,7 +147,10 @@ class OperatorLib(object):
         operator = Operator('KER_SIZE_INC', 1)
 
         def func(node):
-            node.kernel_size += 2  # make sure kernel always stays uneven (e.g. 3, 5, 7 etc.) for convolution to work
+            if node.kernel_size < constants.IMG_DIMENSION:
+                node.kernel_size += 2  # make sure kernel always stays uneven (e.g. 3, 5, 7 etc.) for convolution to work
+                if node.kernel_size > constants.IMG_DIMENSION:  # addition could lead to out of bounds
+                    node.kernel_size -= 2
             return node
 
         operator.set_pheno_func(func)
@@ -157,7 +160,7 @@ class OperatorLib(object):
         operator = Operator('KER_SIZE_DEC', 1)
 
         def func(node):
-            if node.kernel_size > constants.KERNEL_SIZE:  # make sure kernel stays at least KERNEL_SIZE
+            if node.kernel_size > constants.KERNEL_SIZE_MIN:  # make sure kernel stays at least KERNEL_SIZE_MIN
                 node.kernel_size -= 2  # make sure it always stays uneven (e.g. 3, 5, 7 etc.) for convolution to work
             return node
 
@@ -168,7 +171,8 @@ class OperatorLib(object):
         operator = Operator('POOL_SIZE_INC', 1)
 
         def func(node):
-            node.pool_size += 1
+            if node.pool_size < constants.IMG_DIMENSION: # prevent out of bounds
+                node.pool_size += 1
             return node
 
         operator.set_pheno_func(func)
@@ -178,7 +182,7 @@ class OperatorLib(object):
         operator = Operator('POOL_SIZE_DEC', 1)
 
         def func(node):
-            if node.pool_size > constants.POOL_SIZE:  # make sure it always stays at least POOL_SIZE
+            if node.pool_size > constants.POOL_SIZE_MIN:  # make sure it always stays at least POOL_SIZE_MIN
                 node.pool_size -= 1
             return node
 

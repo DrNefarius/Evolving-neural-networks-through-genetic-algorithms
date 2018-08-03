@@ -56,10 +56,7 @@ def evolve():
         network = ModelNN(phenotype, noOfNet)
         noOfNet += 1
         print(network.test_acc)
-        individual.score = network.test_acc
-        individual.trainAcc = network.train_acc
-        score_gen = network.test_acc
-        return score_gen,
+        return network.test_acc,
 
     toolbox.register("evaluate", evaluate)
     toolbox.register("mate", gp.cxOnePoint)
@@ -118,11 +115,11 @@ def evolve():
 
             # mutate duplicates
             dup_counter = 0
-            for outer in range(len(offspring)):
-                for inner in range(outer + 1, len(offspring)):
-                    if str(offspring[outer]) == str(offspring[inner]):
-                        toolbox.mutate(offspring[inner])
-                        del offspring[inner].fitness.values
+            for i in range(len(offspring)):
+                for j in range(i + 1, len(offspring)):
+                    if str(offspring[i]) == str(offspring[j]):
+                        toolbox.mutate(offspring[j])
+                        del offspring[j].fitness.values
                         dup_counter += 1
             print(str(dup_counter) + " Duplikate mutiert.")
 

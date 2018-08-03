@@ -6,10 +6,10 @@ DATASET = 'MNIST'  # DATASET can be either 'MNIST' or 'CIFAR10'
 TRAIN_SIZE = 5000  # fallback parameter if no valid DATASET is declared
 IMG_DIMENSION = 28  # fallback parameter if no valid DATASET is declared
 
-FILTER_COUNT = 32
-DROPOUT = 0.5
-KERNEL_SIZE = 3
-POOL_SIZE = 2
+FILTER_COUNT_MIN = 32
+DROPOUT_START = 0.5
+KERNEL_SIZE_MIN = 3
+POOL_SIZE_MIN = 2
 
 if DATASET == 'MNIST':
     TRAIN_SIZE = 6000  # 60000 standard
@@ -31,9 +31,8 @@ MUTPB = 0.1  # Probability of Mutation
 CXPB = 0.5  # Probability of Crossover
 BLOAT_LIMIT = 17
 
-NEURONS = 100
 ACTIVATION_FUNCTION = 'relu'  # standard activation function
-MIN_NEURONS = NEURONS
+MIN_NEURONS = 100
 MAX_NEURONS = 10000
 
 # Keras stuff

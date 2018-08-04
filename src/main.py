@@ -13,7 +13,6 @@ from model_nn import ModelNN
 from operator import attrgetter
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import queue
 
 
 def evolve():
@@ -56,6 +55,8 @@ def evolve():
         network = ModelNN(phenotype, noOfNet)
         noOfNet += 1
         print(network.test_acc)
+        individual.test_acc = network.test_acc
+        individual.train_acc = network.train_acc
         return network.test_acc,
 
     toolbox.register("evaluate", evaluate)
@@ -76,15 +77,15 @@ def evolve():
         last_index = len(pop) - 1
         factor = c_index / (constants.NGEN * 1.0)
         completion_string = str(round(factor * 100, 2)) + "% abgeschlossen.\n"
-        best_string = 'Bestes Individuum erreicht ' + str(pop[0].score) + '% Genauigkeit.'
+        best_string = 'Bestes Individuum erreicht ' + str(pop[0].test_acc) + '% Genauigkeit.'
         print(completion_string + best_string)
-        worst.append(pop[last_index].score)
-        best.append(pop[0].score)
-        train_acc.append(pop[0].trainAcc)
-        test_acc.append(pop[0].score)
+        worst.append(pop[last_index].test_acc)
+        best.append(pop[0].test_acc)
+        train_acc.append(pop[0].train_acc)
+        test_acc.append(pop[0].test_acc)
         total_score = 0
         for individual in pop:
-            total_score += individual.score
+            total_score += individual.test_acc
         average.append(total_score / constants.POPS)
 
     # Data for graph
@@ -97,6 +98,7 @@ def evolve():
     comp_index = 1
     for gen in range(constants.NGEN):
         if gen != constants.NGEN:
+            start = time.time()
             selected = toolbox.select(population, len(population))
             offspring = [toolbox.clone(ind) for ind in selected]
 
@@ -134,6 +136,8 @@ def evolve():
             population[:] = offspring
 
             log_pop(population, comp_index)
+            end = time.time()
+            print(str(end - start) + ' Sekunden für Generation ' + str(comp_index) + ' benötigt.')
             comp_index += 1
 
     # create graph
@@ -160,67 +164,6 @@ def evolve():
     plt.xlabel('GENERATION NUMBER')
     plt.savefig(constants.GENGRAPH_PATH)
     return population
-
-
-# -------------- PRINT INDIVIDUAL GENOTYPE -----------------
-def print_genotype(indi, root):
-    outp = ''
-    nodes = index_tree(root)
-    for node in nodes:
-        outp += get_ways(node)
-    file = open(constants.GENOTYPE_PATH, 'a')
-    file.write('\n\n' + str(indi) + '\n')
-    if hasattr(indi, 'score'):
-        file.write(str(indi.score) + '   ' + str(indi.height) + '\n')
-    file.write('digraph{\n')
-    file.write(outp)
-    file.write('}')
-    file.close()
-
-
-def index_tree(node):
-    que = queue.Queue()
-    que.put(node)
-    arr = []
-    index = 0
-    while not que.empty():
-        node = que.get()
-        arr.append(node)
-        node.index = str(index) + '_' + node.get_type()
-        index = index + 1
-        if hasattr(node, 'left'):
-            que.put(node.left)
-        if hasattr(node, 'right'):
-            que.put(node.right)
-    return arr
-
-
-def get_ways(node):
-    outp = ''
-    if hasattr(node, 'left'):
-        outp += '\"' + str(node.index) + '\"' + '->' + '\"' + str(node.left.index) + '\"' + '\n'
-    if hasattr(node, 'right'):
-        outp += '\"' + str(node.index) + '\"' + '->' + '\"' + str(node.right.index) + '\"' + '\n'
-    return outp
-
-
-def print_tree(node, space):
-    offset = get_offset(space)
-    if type(node) is not 'str':
-        print(offset + node.get_type())
-    if not node.is_terminal():
-        if hasattr(node, 'left'):
-            print_tree(node.left, space + 1)
-        if hasattr(node, 'right'):
-            print_tree(node.right, space + 1)
-    return
-
-
-def get_offset(count):
-    offset = ''
-    for i in range(0, count):
-        offset = offset + '\t'
-    return offset
 
 
 def debug_individual(individual):

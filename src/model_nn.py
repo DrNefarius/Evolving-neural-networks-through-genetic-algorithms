@@ -21,46 +21,45 @@ from keras import backend as K
 
 class ModelNN(object):
 
-    def __init__(self, root, no_of_net):
+    def __init__(self, phenotype, no_of_net):
         sess = tf.Session()
         K.set_session(sess)
-        temp = self.create_model(root, no_of_net)
-        self.test_acc = temp[1]
-        self.train_acc = temp[0]
+        nn = self.create_model(phenotype, no_of_net)
+        self.train_acc = nn[0]
+        self.test_acc = nn[1]
 
-    def create_model(self, pheno, no_of_net):
-        phenotypes = pheno[0]
-        order = pheno[1]
+    def create_model(self, phenotype, no_of_net):
+        phenotypes = phenotype[0]
+        order = phenotype[1]
 
-        seed = 42
-        n_iter = 1
-        train_size = constants.TRAIN_SIZE
+        seed = 42  # the meaning of life
+        n_splits = 1
 
         if constants.DATASET == 'MNIST':
             (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-            if train_size < 60000:
-                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=constants.OUTPUT_DIMENSION,
-                                             train_size=train_size, random_state=seed)
+            if constants.TRAIN_SIZE < 60000:
+                sss = StratifiedShuffleSplit(n_splits=n_splits, test_size=constants.OUTPUT_DIMENSION,
+                                             train_size=constants.TRAIN_SIZE, random_state=seed)
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
-        elif constants.DATASET == 'CIFAR':
+        elif constants.DATASET == 'CIFAR10':
             (X_train, Y_train), (X_test, Y_test) = cifar10.load_data()
-            if train_size < 50000:
-                sss = StratifiedShuffleSplit(n_splits=n_iter, test_size=constants.OUTPUT_DIMENSION,
-                                             train_size=train_size, random_state=seed)
+            if constants.TRAIN_SIZE < 50000:
+                sss = StratifiedShuffleSplit(n_splits=n_splits, test_size=constants.OUTPUT_DIMENSION,
+                                             train_size=constants.TRAIN_SIZE, random_state=seed)
                 sss.get_n_splits(X_train, Y_train)
                 for train_index, test_index in sss.split(X_train, Y_train):
                     X_train, Y_train = X_train[train_index], Y_train[train_index]
 
         if constants.USE_CNN:
-            X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
+            X_train = X_train.reshape(constants.TRAIN_SIZE, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
                                       constants.INPUT_DIMENSION[1])
-            X_test = X_test.reshape(10000, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
+            X_test = X_test.reshape(constants.TEST_SIZE, constants.INPUT_DIMENSION[0], constants.INPUT_DIMENSION[0],
                                     constants.INPUT_DIMENSION[1])
         else:
-            X_train = X_train.reshape(train_size, constants.INPUT_DIMENSION)
-            X_test = X_test.reshape(10000, constants.INPUT_DIMENSION)
+            X_train = X_train.reshape(constants.TRAIN_SIZE, constants.INPUT_DIMENSION)
+            X_test = X_test.reshape(constants.TEST_SIZE, constants.INPUT_DIMENSION)
         X_train = X_train.astype('float32')
         X_train /= 255
         Y_train = np_utils.to_categorical(Y_train, constants.K_CLASS_COUNT)
@@ -89,6 +88,7 @@ class ModelNN(object):
                 concatenation = []
                 for inp in layer.inputs:
                     concatenation.append(layers[inp.index])
+                # TODO: Why does this fail sometimes?
                 x = keras.layers.concatenate(concatenation)
             else:
                 for inp in layer.inputs:
@@ -141,11 +141,8 @@ class ModelNN(object):
 
         model = Model(inputs=input_layer, outputs=output_layer)
         model.compile(loss=constants.K_LOSS, optimizer=constants.K_OPTIMIZER, metrics=['accuracy'])
-        model.fit(X_train, Y_train,
-                  batch_size=constants.BATCH_SIZE,
-                  epochs=constants.K_EPOCHS,
-                  verbose=constants.K_VERBOSE,
-                  validation_data=(X_test, Y_test))
+        model.fit(X_train, Y_train, batch_size=constants.BATCH_SIZE, epochs=constants.K_EPOCHS,
+                  verbose=constants.K_VERBOSE, validation_data=(X_test, Y_test))
         score = model.evaluate(X_test, Y_test, verbose=constants.K_VERBOSE)
         test_score = score[1] * 100
         score = model.evaluate(X_train, Y_train, verbose=constants.K_VERBOSE)

@@ -1,10 +1,3 @@
-'''
-This Object is used for implementing the genotype tree structure.
-It is used as a link list to create binary trees.
-Unary operators only have a left descendant.
-'''
-
-
 class Genotype(object):
 
     def __init__(self, type=None):

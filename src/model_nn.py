@@ -79,42 +79,51 @@ class ModelNN(object):
             list_of_layers.append((round(constants.INPUT_DIMENSION / 100), 'relu'))
         output_layers = []
 
+        index = 0
         while len(order) > 0:
-            order_index = order[0]  # always use the first element
+            order_index = order[index]  # always use the first element
             layer = phenotypes[order_index]  # iterate through Phenotype nodes
             # for layers with more than 1 input concatenate all previously created layers and use the concatenations
             # as input for newly created layer
-            if len(layer.inputs) > 1:
-                concatenation = []
-                for inp in layer.inputs:
-                    concatenation.append(layers[inp.index])
-                # TODO: Why does this fail sometimes?
-                x = keras.layers.concatenate(concatenation)
-            else:
-                for inp in layer.inputs:
-                    # for layers with only one input create new layer and use the layer
-                    x = (layers[inp.index])
-            if not constants.USE_CNN:
-                layers[order_index] = Dense(layer.neurons, activation=layer.activation_function)(x)
-                list_of_layers.append((round(layer.neurons / 100), layer.activation_function))
-            else:
-                x = Conv2D(filters=layer.filter_count, kernel_size=layer.kernel_size,
-                           strides=(1, 1), padding='same', activation=layer.activation_function)(x)
-                model.add(drawConv2D(filters=layer.filter_count, kernel_size=(layer.kernel_size, layer.kernel_size),
-                                     strides=(1, 1), padding='same'))
-                if layer.maxPooling:
-                    x = MaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
-                                     strides=(1, 1), padding='same')(x)
-                    model.add(drawMaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
-                                               strides=(1, 1), padding='same'))
 
-                Dropout(layer.dropout)(x)
-                # model.add(drawDropout(layer.dropout))
-                layers[order_index] = x
+            inputs_compiled = True
+            for input in layer.inputs:
+                inputs_compiled &= (layers[input.index] is not None)
 
-            if len(layer.outputs) == 0:  # mark all output layers
-                output_layers.append(layers[order_index])
-            order.remove(order_index)
+            if inputs_compiled:
+                if len(layer.inputs) > 1:
+                    concatenation = []
+                    for input in layer.inputs:
+                        concatenation.append(layers[input.index])
+                    x = keras.layers.concatenate(concatenation)
+                else:
+                    for input in layer.inputs:
+                        # for layers with only one input create new layer and use the layer
+                        x = (layers[input.index])
+                if not constants.USE_CNN:
+                    layers[order_index] = Dense(layer.neurons, activation=layer.activation_function)(x)
+                    list_of_layers.append((round(layer.neurons / 100), layer.activation_function))
+                else:
+                    x = Conv2D(filters=layer.filter_count, kernel_size=layer.kernel_size,
+                               strides=(1, 1), padding='same', activation=layer.activation_function)(x)
+                    model.add(drawConv2D(filters=layer.filter_count, kernel_size=(layer.kernel_size, layer.kernel_size),
+                                         strides=(1, 1), padding='same'))
+                    if layer.maxPooling:
+                        x = MaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
+                                         strides=(1, 1), padding='same')(x)
+                        model.add(drawMaxPooling2D(pool_size=(layer.pool_size, layer.pool_size),
+                                                   strides=(1, 1), padding='same'))
+
+                    Dropout(layer.dropout)(x)
+                    # model.add(drawDropout(layer.dropout))
+                    layers[order_index] = x
+
+                if len(layer.outputs) == 0:  # mark all output layers
+                    output_layers.append(layers[order_index])
+                order.remove(order_index)
+                index = 0
+            else:
+                index += 1
 
         input_layer = layers[0]
         if len(output_layers) > 1:

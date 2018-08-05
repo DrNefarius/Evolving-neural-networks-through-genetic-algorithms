@@ -25,7 +25,7 @@ POOL_SIZE_MIN = 2
 
 CHANNEL = 1
 if DATASET == 'MNIST':
-    TRAIN_SIZE = 60000  # 60000 standard
+    TRAIN_SIZE = 6000  # 60000 standard
     IMG_DIMENSION = 28
 elif DATASET == 'CIFAR10':
     TRAIN_SIZE = 50000  # 50000 standard

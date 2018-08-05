@@ -3,6 +3,9 @@ class Genotype(object):
     def __init__(self, type=None):
         if type is not None:
             self.type = type
+        self.parent = None
+        self.right = None
+        self.left = None
 
     def set_type(self, type):
         self.type = type

@@ -4,6 +4,10 @@ from src import constants
 
 
 class Converter(object):
+    """
+    Convertes a genotype tree to the corresponding phenotypes.
+    Phenotypes are getting saved in node_lib.
+    """
 
     def __init__(self, phenotype_functions):
         self.phen_functions = phenotype_functions
@@ -12,6 +16,13 @@ class Converter(object):
         self.node_lib = []
 
     def resolve_pheno(self, genotype, individual):
+        """
+        Initializes the following process of conversion by setting up a mother node.
+        Returns the phenotypes and the order in which they have to be applied.
+        :param genotype: the complete genotype tree
+        :param individual: the individual
+        :return: the library of phenotype nodes and the order in which they have to be applied
+        """
         self.individual = individual
         self.input = Phenotype(0)
         mother = Phenotype(1)
@@ -25,6 +36,7 @@ class Converter(object):
         return library, order
 
     def iterate_through(self, mother, genotype):
+        """Iterates through the queue and resolves every connection in the genotype tree"""
         self.que = queue.Queue()
         self.que.put([mother, genotype])
         while not self.que.empty():
@@ -35,6 +47,13 @@ class Converter(object):
                 self.iterate_pheno(item[0], item[1])
 
     def iterate_pheno(self, node, genotype_node):
+        """
+        Applies the phenofunction on the phenotype node based on the genotype operator.
+        Puts the resulting node and the rest of the genotype tree back into the queue for further resolving.
+        :param node: the phenotype node
+        :param genotype_node: the genotype node
+        :return: nothing, but puts the resulting node and tree back into queue
+        """
         operator = self.phen_functions[genotype_node.type]
         func = operator[0]
         arity = operator[1]
@@ -49,6 +68,7 @@ class Converter(object):
         return
 
     def print_phenotype(self, ind, order):
+        """Prints the complete phenotype structure, which is basically a textmodel of the neural network"""
         outp = ''
         outp += self.get_ways(self.node_lib[0])
         for index in order:
@@ -61,12 +81,14 @@ class Converter(object):
         file.close()
 
     def convert_node_lib(self, arr):
+        """sorting of the node_lib for further work"""
         lib = [None] * len(arr)
         for n in arr:
             lib[n.index] = n
         return lib
 
     def get_ways(self, node):
+        """Used to print the complete phenotype structure by print_phenotype"""
         outp = ''
         for o in node.outputs:
             inName = 'l' + str(node.index) + '_' + str(node.neurons) + 'n_' + node.activation_function
@@ -75,6 +97,7 @@ class Converter(object):
         return outp
 
     def sort_breadth_first(self, node):
+        """Sorts the order of the indices by breadth first search"""
         que = queue.Queue()
         que.put(node)
         order = []

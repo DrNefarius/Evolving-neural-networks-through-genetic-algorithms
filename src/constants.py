@@ -1,7 +1,7 @@
 DEBUG = False
 USE_CNN = False
 
-#TODO: implement these strategies
+# TODO: implement these strategies
 EXIT_STRAT = 'GENERATIONS'  # could be 'GENERATIONS', 'TIME' or 'THRESHOLD'
 EXIT_TIMER = 60  # in minutes; only used with EXIT_STRAT = 'TIME'
 EXIT_THRESHOLD = 98  # in percent, only used with EXIT_STRAT = 'THRESHOLD'

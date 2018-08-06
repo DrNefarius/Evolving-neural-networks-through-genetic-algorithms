@@ -2,6 +2,11 @@ from evolution.genotype import Genotype
 
 
 class Operator(object):
+    """
+    Functions as a wrapper for all operators. Defines name, arity, func and phenofunc.
+    Models the tree structure based in the genotypes and the arity of the function.
+    """
+
     def __init__(self, name, arity):
         self.name = name
         self.arity = arity

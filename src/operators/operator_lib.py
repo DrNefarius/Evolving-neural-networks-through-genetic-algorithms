@@ -4,6 +4,7 @@ from src import constants
 
 
 class OperatorLib(object):
+    """Defines all operators and saves them in a list for easy access."""
 
     def __init__(self):
         self.operators = []
@@ -171,7 +172,7 @@ class OperatorLib(object):
         operator = Operator('POOL_SIZE_INC', 1)
 
         def func(node):
-            if node.pool_size < constants.IMG_DIMENSION: # prevent out of bounds
+            if node.pool_size < constants.IMG_DIMENSION:  # prevent out of bounds
                 node.pool_size += 1
             return node
 
@@ -189,7 +190,7 @@ class OperatorLib(object):
         operator.set_pheno_func(func)
         self.operators.append(operator)
 
-    # activation function operators for
+    # activation function operators
 
     def addSOFTMAX(self):
         operator = Operator('SOFTMAX', 1)

@@ -2,6 +2,13 @@ from src import constants
 
 
 class Phenotype(object):
+    """
+    Represents a phenotype. Saves all relevant information for building a Keras model.
+    Also has some functions, that are used by some operators.
+    Needs to be initialized with an index, that represents where in the to be created model this phenotype
+    needs to be appplied.
+    Also saves references to inputs and outputs of this phenotype.
+    """
 
     def __init__(self, index, neurons=constants.MIN_NEURONS):
         self.inputs = []
